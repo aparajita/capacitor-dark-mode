@@ -114,13 +114,13 @@ I could spend a lot of time explaining detailed usage, but perhaps the best expl
 
 <docgen-index>
 
-[configure(...)](#configure)
-[isDarkMode()](#isdarkmode)
-[addAppearanceListener(...)](#addappearancelistener)
-[update(...)](#update)
+[configure(...)](#configure)<br>
+[isDarkMode()](#isdarkmode)<br>
+[addAppearanceListener(...)](#addappearancelistener)<br>
+[update(...)](#update)<br>
 
-[Interfaces](#interfaces)
-[Type Aliases](#type-aliases)
+[Interfaces](#interfaces)<br>
+[Type Aliases](#type-aliases)<br>
 [Enums](#enums)
 
 </docgen-index>
