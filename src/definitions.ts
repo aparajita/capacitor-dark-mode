@@ -74,9 +74,9 @@ export interface DarkModeOptions {
    * or undefined, in which case `isDarkMode` will be used.
    *
    * If you are not providing any storage of the dark mode state,
-   * set this to null.
+   * don't pass this in the options.
    */
-  getter?: DarkModeGetter | null
+  getter?: DarkModeGetter
 
   /**
    * If true, on Android the status bar background and content

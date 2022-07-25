@@ -38,7 +38,7 @@ export default class DarkMode extends WebPlugin implements DarkModePlugin {
   private registeredListener = false
   private mediaQuery?: MediaQueryList
   private readonly appearanceListeners = new Set<DarkModeListener>()
-  private getter: DarkModeGetter | null = null
+  private getter?: DarkModeGetter
   private syncStatusBar = true
 
   // Required by @native decorator
