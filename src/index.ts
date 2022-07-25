@@ -1,10 +1,10 @@
 import { registerPlugin } from '@capacitor/core'
 import type { DarkModePlugin } from './definitions'
 import { kPluginName } from './definitions'
-import { name } from './package.json'
+import pkg from './pkg'
 import DarkMode from './web'
 
-console.log(`loaded ${name}`)
+console.log(`loaded ${pkg.name}`)
 
 // Because we are using @aparajita/capacitor-native-decorator,
 // we have one version of the TS code to rule them all, and there
