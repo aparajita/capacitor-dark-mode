@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [1.1.0](https://github.com/aparajita/capacitor-dark-mode/compare/v1.0.1...v1.1.0) (2022-07-25)
+
+
+### Features
+
+* rename configure, make docs clearer ([7c53542](https://github.com/aparajita/capacitor-dark-mode/commit/7c53542a6777b36352515452ba3f69dba538218d))
+
+
+### Maintenance
+
+* update target to iOS 13, prepare for Cap4 ([43a4d3e](https://github.com/aparajita/capacitor-dark-mode/commit/43a4d3e383e1317ffa0aea3fb8b1e912a893bef9))
+
 ### [1.0.1](https://github.com/aparajita/capacitor-dark-mode/compare/v1.0.0...v1.0.1) (2022-07-25)
 
 
