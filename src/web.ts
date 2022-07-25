@@ -80,11 +80,11 @@ export default class DarkMode extends WebPlugin implements DarkModePlugin {
     this.registeredListener = true
   }
 
-  async configure({
+  async init({
     cssClass,
     getter,
     syncStatusBar
-  }: DarkModeOptions): Promise<void> {
+  }: DarkModeOptions = {}): Promise<void> {
     if (cssClass) {
       // Remove the old class if it exists
       document.documentElement.classList.remove(this.darkModeClass)
@@ -104,6 +104,13 @@ export default class DarkMode extends WebPlugin implements DarkModePlugin {
     }
 
     await this.update()
+  }
+
+  async configure(options?: DarkModeOptions): Promise<void> {
+    console.warn(
+      'DarkMode.configure is deprecated. Please use DarkMode.init instead.'
+    )
+    await this.init(options)
   }
 
   async addAppearanceListener(

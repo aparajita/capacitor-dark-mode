@@ -89,11 +89,17 @@ export interface DarkModeOptions {
 
 export interface DarkModePlugin extends DecoratedNativePlugin {
   /**
-   * Configures the dark mode class and getter used to retrieve
-   * the current dark mode state. This should be done BEFORE
-   * the app is mounted to avoid a flash of the wrong mode.
+   * Initializes the plugin and optionally configures the dark mode
+   * class and getter used to retrieve the current dark mode state.
+   * This should be done BEFORE the app is mounted to avoid a flash
+   * of the wrong mode.
    */
-  configure: (options: DarkModeOptions) => Promise<void>
+  init: (options?: DarkModeOptions) => Promise<void>
+
+  /**
+   * DEPRECATED: Use `init` instead.
+   */
+  configure: (options?: DarkModeOptions) => Promise<void>
 
   /**
    * web: Returns the result of the 'prefers-color-scheme: dark' media query.
