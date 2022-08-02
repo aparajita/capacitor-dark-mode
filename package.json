@@ -49,6 +49,11 @@
     "release.check": "pnpm check.fix && commit-and-tag-version ${VERSION:+-r $VERSION} --dry-run",
     "release.prepare": "commit-and-tag-version ${VERSION:+-r $VERSION}",
     "release": "pnpm push && pnpm publish"
+  "ultra": {
+    "concurrent": [
+      "lint",
+      "verify"
+    ]
   },
   "keywords": [
     "capacitor",
@@ -101,6 +106,7 @@
     "rollup": "^2.77.0",
     "swiftlint": "^1.0.1",
     "typescript": "~4.7.4"
+    "ultra-runner": "^3.10.5"
   },
   "dependencies": {
     "@aparajita/capacitor-native-decorator": "^2.0.8",
