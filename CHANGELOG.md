@@ -2,6 +2,33 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.0.0](https://github.com/aparajita/capacitor-dark-mode/compare/v1.1.0...v2.0.0) (2022-08-02)
+
+
+### ⚠ BREAKING CHANGES
+
+* Requires Capacitor 4.
+
+### Features
+
+* upgrade to Capacitor 4 ([51aaa1c](https://github.com/aparajita/capacitor-dark-mode/commit/51aaa1cb609d9314c1e4bad897d6aa3185dae8b2))
+
+
+### Maintenance
+
+* extract info before build ([7459226](https://github.com/aparajita/capacitor-dark-mode/commit/7459226b8c91072f3b99436ef4eb38baaf6c047c))
+* rename ([a54bf8e](https://github.com/aparajita/capacitor-dark-mode/commit/a54bf8e56b937e72d77eb7b1d1d9dcdbfc9559c0))
+* rework scripts and build pipeline ([6eea2a0](https://github.com/aparajita/capacitor-dark-mode/commit/6eea2a0abb68ffbc61cf0b1e4a18ce806016498b))
+* update deps ([b4450f5](https://github.com/aparajita/capacitor-dark-mode/commit/b4450f5e90fcfdff9611bf760d6aa47127c5d8a8))
+* use husky/commitlint ([2f14d7a](https://github.com/aparajita/capacitor-dark-mode/commit/2f14d7a81921dc7eeeba59e159177aab479f707e))
+* use ultra-runner ([69625c7](https://github.com/aparajita/capacitor-dark-mode/commit/69625c77517c167d57ae393e8103039ac517565c))
+* using tslib ([2b8c510](https://github.com/aparajita/capacitor-dark-mode/commit/2b8c510bc8c32a0c3cd7e1d11dd5d4720ab30889))
+
+
+### Refactoring
+
+* more script work ([168c8b3](https://github.com/aparajita/capacitor-dark-mode/commit/168c8b35063fa23398266b945f6bdd918176b950))
+
 ## [1.1.0](https://github.com/aparajita/capacitor-dark-mode/compare/v1.0.1...v1.1.0) (2022-07-25)
 
 
