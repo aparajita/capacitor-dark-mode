@@ -29,7 +29,7 @@
     "lint": "pnpm -s lint.eslint . && pnpm -s lint.prettier . && pnpm -s lint.tsc",
     "lint.fix": "pnpm -s lint.eslint --fix . && pnpm -s lint.prettier --write . && pnpm -s lint.tsc",
     "tsc": "tsc ${SOURCE_MAP}",
-    "builder": "rimraf dist && pnpm -s tsc && rollup -c rollup.config.mjs && pnpm -s docgen",
+    "builder": "pnpm -s extract-info && rimraf dist && pnpm -s tsc && rollup -c rollup.config.mjs && pnpm -s docgen",
     "build": "pnpm -s builder",
     "build.dev": "SOURCE_MAP=--sourceMap pnpm -s builder",
     "docgen": "docgen --api DarkModePlugin --output-readme README.md && docgen-format",
