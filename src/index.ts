@@ -17,6 +17,5 @@ const darkMode = registerPlugin<DarkModePlugin>(kPluginName, {
   android: plugin
 })
 
-// eslint-disable-next-line import/prefer-default-export
 export { darkMode as DarkMode }
 export * from './definitions'
