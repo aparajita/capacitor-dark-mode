@@ -1,11 +1,12 @@
 {
-  "watch": ["cli", "src", "rollup.config.mjs", "tsconfig*.json"],
+  "watch": ["src", "rollup.config.mjs", "tsconfig*.json"],
   "ext": "js,ts,md,json",
   "ignore": [
-    ".depcheckrc",
+    ".depcheckrc.yaml",
     ".editorconfig",
     ".eslintcache",
     ".ultra.cache.json",
-    "pnpm-lock.yaml"
+    "pnpm-lock.yaml",
+    "src/info.json"
   ]
 }
