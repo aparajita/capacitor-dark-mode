@@ -18,21 +18,17 @@ export enum DarkModeAppearance {
  * Your getter function should return (directly or as a Promise) either:
  *
  * - A DarkModeAppearance to signify that is the appearance you want
+ *
  * - null or undefined to signify the system appearance should be used
  */
-export type DarkModeGetterResultTypes = DarkModeAppearance | null | undefined
-
-/**
- * Your getter can return either a value or a Promise. Promises are awaited.
- */
-export type DarkModeGetterResult =
-  | DarkModeGetterResultTypes
-  | Promise<DarkModeGetterResultTypes>
+export type DarkModeGetterResult = DarkModeAppearance | null | undefined
 
 /**
  * The type of your getter function.
  */
-export type DarkModeGetter = () => DarkModeGetterResult
+export type DarkModeGetter = () =>
+  | DarkModeGetterResult
+  | Promise<DarkModeGetterResult>
 
 /**
  * When you call `addAppearanceListener`, you get back a handle
