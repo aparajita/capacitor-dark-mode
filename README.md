@@ -247,17 +247,11 @@ Your appearance listener callback will receive this data, indicating whether the
 
 The type of your getter function.
 
-<code>(): <a href="#darkmodegetterresult">DarkModeGetterResult</a></code>
+<code>(): <a href="#darkmodegetterresult">DarkModeGetterResult</a> | Promise&lt;<a href="#darkmodegetterresult">DarkModeGetterResult</a>&gt;</code>
 
 #### DarkModeGetterResult
 
-Your getter can return either a value or a Promise. Promises are awaited.
-
-<code><a href="#darkmodegetterresulttypes">DarkModeGetterResultTypes</a> | Promise&lt;<a href="#darkmodegetterresulttypes">DarkModeGetterResultTypes</a>&gt;</code>
-
-#### DarkModeGetterResultTypes
-
-Your getter function should return (directly or as a Promise) either:<br><br>- A <a href="#darkmodeappearance">DarkModeAppearance</a> to signify that is the appearance you want - null or undefined to signify the system appearance should be used
+Your getter function should return (directly or as a Promise) either:<br><br>- A <a href="#darkmodeappearance">DarkModeAppearance</a> to signify that is the appearance you want<br><br>- null or undefined to signify the system appearance should be used
 
 <code><a href="#darkmodeappearance">DarkModeAppearance</a> | null</code> |
 

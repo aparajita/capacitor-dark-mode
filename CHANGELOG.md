@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [2.0.2](https://github.com/aparajita/capacitor-dark-mode/compare/v2.0.1...v2.0.2) (2022-08-05)
+
+
+### Bug Fixes
+
+* typing did not allow returning a Promise ([3d07f54](https://github.com/aparajita/capacitor-dark-mode/commit/3d07f546e8d047eecbf9ffa1616d6e2a90bd4ec7))
+
+
+### Docs
+
+* need to handle the returned promise ([d347864](https://github.com/aparajita/capacitor-dark-mode/commit/d347864227ea60652763981ba4132056125fa8f4))
+
+
+### Maintenance
+
+* commit README ([92ebe76](https://github.com/aparajita/capacitor-dark-mode/commit/92ebe76a5bf680b1688a213568a246a5b964b28c))
+* don’t generate docs until release ([c14b6ee](https://github.com/aparajita/capacitor-dark-mode/commit/c14b6ee239697a30af3ebdaa4cb6498a42462b23))
+
 ### [2.0.1](https://github.com/aparajita/capacitor-dark-mode/compare/v2.0.0...v2.0.1) (2022-08-04)
 
 
