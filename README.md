@@ -37,7 +37,7 @@ import { DarkMode } from '@aparajita/capacitor-dark-mode'
 
 // If you need to configure the plugin, pass the options here.
 // See Configuration below for more details.
-DarkMode.init()
+DarkMode.init().catch(console.error)
 ```
 
 ## Configuration
