@@ -113,13 +113,11 @@ export default class DarkMode extends WebPlugin implements DarkModePlugin {
     await this.init(options)
   }
 
-  async addAppearanceListener(
-    listener: DarkModeListener
-  ): Promise<DarkModeListenerHandle> {
+  addAppearanceListener(listener: DarkModeListener): DarkModeListenerHandle {
     this.appearanceListeners.add(listener)
-    return Promise.resolve({
+    return {
       remove: () => this.appearanceListeners.delete(listener)
-    })
+    }
   }
 
   @native()

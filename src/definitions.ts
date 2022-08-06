@@ -115,9 +115,7 @@ export interface DarkModePlugin extends DecoratedNativePlugin {
    * is unmounted (which happens a lot with HMR). Otherwise there will be a memory leak
    * and multiple listeners executing the same function.
    */
-  addAppearanceListener: (
-    listener: DarkModeListener
-  ) => Promise<DarkModeListenerHandle>
+  addAppearanceListener: (listener: DarkModeListener) => DarkModeListenerHandle
 
   /**
    * Adds or removes the dark mode class on the html element
