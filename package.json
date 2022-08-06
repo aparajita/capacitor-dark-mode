@@ -108,7 +108,7 @@
     "ultra-runner": "^3.10.5"
   },
   "dependencies": {
-    "@aparajita/capacitor-native-decorator": "^3.0.0",
+    "@aparajita/capacitor-native-decorator": "^3.0.1",
     "@capacitor/android": "^4.0.1",
     "@capacitor/core": "^4.0.1",
     "@capacitor/ios": "^4.0.1",

@@ -3,7 +3,7 @@ lockfileVersion: 5.4
 specifiers:
   '@aparajita/capacitor-docgen': github:aparajita/capacitor-docgen
   '@aparajita/capacitor-docgen-format': github:aparajita/capacitor-docgen-format
-  '@aparajita/capacitor-native-decorator': ^3.0.0
+  '@aparajita/capacitor-native-decorator': ^3.0.1
   '@aparajita/eslint-config-base': ^1.1.5
   '@aparajita/prettier-config': ^1.0.0
   '@aparajita/swiftly': ^1.0.4
@@ -40,7 +40,7 @@ specifiers:
   ultra-runner: ^3.10.5
 
 dependencies:
-  '@aparajita/capacitor-native-decorator': 3.0.0_tslib@2.4.0
+  '@aparajita/capacitor-native-decorator': 3.0.1_tslib@2.4.0
   '@capacitor/android': 4.0.1_@capacitor+core@4.0.1
   '@capacitor/core': 4.0.1
   '@capacitor/ios': 4.0.1_@capacitor+core@4.0.1
@@ -82,8 +82,8 @@ devDependencies:
 
 packages:
 
-  /@aparajita/capacitor-native-decorator/3.0.0_tslib@2.4.0:
-    resolution: {integrity: sha512-KJW6zLoDi94fx6ShSnF9heDUsCSrXnF9mFmcrN/nES6O/dd+4gEH5gxRXGfsUM9wDbPFeHBhv/Wj3yi1QLaAfQ==}
+  /@aparajita/capacitor-native-decorator/3.0.1_tslib@2.4.0:
+    resolution: {integrity: sha512-VXaVvgbi8vfaBE9INUY876o+6UhlbGf6OfsMf8eF+IqRpTaRQ6U1W7gDsZzvd6AOSHqC9ab2Z8BMvxISRw5KcA==}
     engines: {node: '>=16.15.1'}
     hasBin: true
     peerDependencies:
