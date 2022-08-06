@@ -11,11 +11,11 @@ console.log(`loaded ${info.name} v${info.version}`)
 // is no need to lazy load. 😁
 const plugin = new DarkMode()
 
-const darkMode = registerPlugin<DarkModePlugin>(kPluginName, {
+registerPlugin<DarkModePlugin>(kPluginName, {
   web: plugin,
   ios: plugin,
   android: plugin
 })
 
-export { darkMode as DarkMode }
+export { plugin as DarkMode }
 export * from './definitions'
