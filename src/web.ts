@@ -76,7 +76,6 @@ export default class DarkMode extends WebPlugin implements DarkModePlugin {
       }
     }
 
-    await this.update()
     this.registeredListener = true
   }
 
