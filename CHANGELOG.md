@@ -2,6 +2,24 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [2.1.0](https://github.com/aparajita/capacitor-dark-mode/compare/v2.0.2...v2.1.0) (2022-08-06)
+
+
+### Features
+
+* this method does not need to be async ([0caef0d](https://github.com/aparajita/capacitor-dark-mode/commit/0caef0d96702140782ce9ede3214e449ae742dcc))
+
+
+### Bug Fixes
+
+* export the original plugin! ([c77bd4a](https://github.com/aparajita/capacitor-dark-mode/commit/c77bd4a5a33ad02b549a39e4d507de7aacf46ae4))
+
+
+### Maintenance
+
+* remove extra call to update() ([79dd5fe](https://github.com/aparajita/capacitor-dark-mode/commit/79dd5fe2f6ec975e7d739a9f735c0ef1f3e2acc2))
+* update to latest native-decorator ([f96d0a2](https://github.com/aparajita/capacitor-dark-mode/commit/f96d0a2c7b7c7b562509e291f82d5f0fa6b0fd5e))
+
 ### [2.0.2](https://github.com/aparajita/capacitor-dark-mode/compare/v2.0.1...v2.0.2) (2022-08-05)
 
 

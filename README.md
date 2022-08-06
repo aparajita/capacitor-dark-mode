@@ -184,7 +184,7 @@ web: Returns the result of the 'prefers-color-scheme: dark' media query. native:
 ### addAppearanceListener(...)
 
 ```typescript
-addAppearanceListener(listener: DarkModeListener) => Promise<DarkModeListenerHandle>
+addAppearanceListener(listener: DarkModeListener) => DarkModeListenerHandle
 ```
 
 Adds a listener that will be called whenever the system appearance changes, whether or not the system appearance matches your current appearance. The listener is called AFTER the dark mode class and status bar are updated by the plugin. The listener will be called with <a href="#darkmodelistenerdata">`DarkModeListenerData`</a> indicating if the current system appearance is dark.<br><br>The returned handle contains a `remove` function which you should be sure to call when the listener is no longer needed, for example when a component is unmounted (which happens a lot with HMR). Otherwise there will be a memory leak and multiple listeners executing the same function.
@@ -193,7 +193,7 @@ Adds a listener that will be called whenever the system appearance changes, whet
 | :------- | :----------------------------------------------- |
 | listener | <a href="#darkmodelistener">DarkModeListener</a> |
 
-**Returns:** Promise&lt;<a href="#darkmodelistenerhandle">DarkModeListenerHandle</a>&gt;
+**Returns:** <a href="#darkmodelistenerhandle">DarkModeListenerHandle</a>
 
 ---
 
