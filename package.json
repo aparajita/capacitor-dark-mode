@@ -25,25 +25,26 @@
     "lint.eslint": "eslint --fix --cache --ext .js,.cjs,.mjs,.ts --max-warnings 0",
     "lint.prettier": "prettier --write --cache --list-different",
     "lint.tsc": "tsc --noEmit",
-    "lint": "pnpm -s extract-info && pnpm -s lint.eslint . && pnpm -s lint.prettier . && pnpm -s lint.tsc",
-    "tsc": "tsc ${SOURCE_MAP}",
-    "builder": "pnpm -s extract-info && pnpm -s clean && pnpm -s tsc && rollup -c rollup.config.mjs && make-ios-plugin",
-    "build": "pnpm -s builder",
-    "build.dev": "SOURCE_MAP=--sourceMap pnpm -s builder",
-    "watch": "nodemon --exec 'pnpm -s build.dev'",
-    "docgen": "docgen --api DarkModePlugin --output-readme README.md && docgen-format && pnpm -s lint.prettier README.md",
+    "lint": "pnpm lint.eslint . && pnpm lint.prettier . && pnpm lint.tsc",
+    "prebuilder": "pnpm clean && pnpm extract-info",
+    "builder": "tsc ${SOURCE_MAP:-} && rollup -c rollup.config.mjs",
+    "prebuild": "pnpm lint",
+    "build": "pnpm builder",
+    "build.dev": "SOURCE_MAP=--sourceMap pnpm build",
+    "watch": "nodemon --exec 'pnpm build.dev'",
+    "docgen": "docgen --api DarkModePlugin --output-readme README.md && docgen-format && pnpm lint.prettier README.md",
     "open.ios": "open ios/Plugin.xcworkspace",
     "open.android": "open -b com.google.android.studio android",
     "verify.ios": "cd ios && pod install && xcodebuild -workspace Plugin.xcworkspace -scheme Plugin -quiet && cd ..",
     "verify.android": "cd android && ./gradlew clean build test && cd ..",
     "verify": "pnpm verify.ios && pnpm verify.android",
     "prepare": "husky install",
-    "release.pre": "scripts/ensure-clean.sh && pnpm -s lint && pnpm -s docgen && git add README.md",
-    "release": "pnpm -s release.pre && commit-and-tag-version --commit-all && git push --follow-tags && pnpm publish"
+    "prerelease": "scripts/ensure-clean.sh && pnpm build && pnpm docgen && git add README.md",
+    "release": "commit-and-tag-version --commit-all && git push --follow-tags && pnpm publish"
   },
   "commit-and-tag-version": {
     "scripts": {
-      "postbump": "pnpm -s builder"
+      "postbump": "pnpm builder"
     }
   },
   "keywords": [
