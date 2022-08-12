@@ -46,11 +46,6 @@
       "postbump": "pnpm -s builder"
     }
   },
-  "ultra": {
-    "concurrent": [
-      "verify"
-    ]
-  },
   "keywords": [
     "capacitor",
     "plugin",
@@ -104,8 +99,7 @@
     "rimraf": "^3.0.2",
     "rollup": "^2.77.2",
     "swiftlint": "^1.0.1",
-    "typescript": "~4.7.4",
-    "ultra-runner": "^3.10.5"
+    "typescript": "~4.7.4"
   },
   "dependencies": {
     "@aparajita/capacitor-native-decorator": "^3.0.1",
