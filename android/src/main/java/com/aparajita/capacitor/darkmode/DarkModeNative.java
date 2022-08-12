@@ -1,14 +1,12 @@
 package com.aparajita.capacitor.darkmode;
 
 import android.content.res.Configuration;
-import com.getcapacitor.JSObject;
-import com.getcapacitor.Plugin;
-import com.getcapacitor.PluginCall;
-import com.getcapacitor.PluginMethod;
+
+import com.getcapacitor.*;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
-@CapacitorPlugin(name = "DarkMode")
-public class DarkMode extends Plugin {
+@CapacitorPlugin(name = "DarkModeNative")
+public class DarkModeNative extends Plugin {
 
   private int currentMode = Configuration.UI_MODE_NIGHT_UNDEFINED;
   private PluginCall listenerCall = null;
@@ -37,7 +35,7 @@ public class DarkMode extends Plugin {
     call.resolve(result);
   }
 
-  @PluginMethod
+  @PluginMethod(returnType = PluginMethod.RETURN_CALLBACK)
   public void setNativeDarkModeListener(PluginCall call) {
     if (listenerCall != null) {
       getBridge().releaseCall(listenerCall);

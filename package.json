@@ -103,11 +103,9 @@
     "typescript": "~4.7.4"
   },
   "dependencies": {
-    "@aparajita/capacitor-native-decorator": "^3.0.1",
     "@capacitor/android": "^4.0.1",
     "@capacitor/core": "^4.0.1",
     "@capacitor/ios": "^4.0.1",
-    "@capacitor/status-bar": "^4.0.1",
-    "tslib": "^2.4.0"
+    "@capacitor/status-bar": "^4.0.1"
   }
 }

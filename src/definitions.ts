@@ -1,7 +1,4 @@
-import type { DecoratedNativePlugin } from '@aparajita/capacitor-native-decorator'
-
-// The registered name of the plugin.
-export const kPluginName = 'DarkMode'
+import type { WebPlugin } from '@capacitor/core'
 
 /**
  * The possible appearances an app can have.
@@ -83,11 +80,19 @@ export interface DarkModeOptions {
   syncStatusBar?: boolean
 }
 
-export interface DarkModePlugin extends DecoratedNativePlugin {
+/**
+ * Result returned by `isDarkMode`.
+ */
+export interface IsDarkModeResult {
+  dark: boolean
+}
+
+export interface DarkModePlugin extends WebPlugin {
   /**
    * Initializes the plugin and optionally configures the dark mode
    * class and getter used to retrieve the current dark mode state.
-   * This should be done BEFORE the app is mounted to avoid a flash
+   * This should be done BEFORE the app is mounted but AFTER the dom
+   * is defined (e.g. at the end of the <body>) to avoid a flash
    * of the wrong mode.
    */
   init: (options?: DarkModeOptions) => Promise<void>
@@ -98,10 +103,17 @@ export interface DarkModePlugin extends DecoratedNativePlugin {
   configure: (options?: DarkModeOptions) => Promise<void>
 
   /**
-   * web: Returns the result of the 'prefers-color-scheme: dark' media query.
+   * web: Returns the result of the `prefers-color-scheme: dark` media query.
+   *
    * native: Returns whether the system is currently in dark mode.
    */
-  isDarkMode: () => Promise<boolean>
+  isDarkMode: () => Promise<IsDarkModeResult>
+
+  // private
+  setNativeDarkModeListener: (
+    options: Record<string, unknown>,
+    callback: DarkModeListener
+  ) => Promise<string>
 
   /**
    * Adds a listener that will be called whenever the system appearance changes,
@@ -115,7 +127,9 @@ export interface DarkModePlugin extends DecoratedNativePlugin {
    * is unmounted (which happens a lot with HMR). Otherwise there will be a memory leak
    * and multiple listeners executing the same function.
    */
-  addAppearanceListener: (listener: DarkModeListener) => DarkModeListenerHandle
+  addAppearanceListener: (
+    listener: DarkModeListener
+  ) => Promise<DarkModeListenerHandle>
 
   /**
    * Adds or removes the dark mode class on the html element

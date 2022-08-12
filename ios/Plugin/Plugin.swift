@@ -1,7 +1,7 @@
 import Capacitor
 
-@objc(DarkMode)
-public class DarkMode: CAPPlugin {
+@objc(DarkModeNative)
+public class DarkModeNative: CAPPlugin {
   private var traitsView: TraitsView?
   private var listenerCall: CAPPluginCall?
   private var resumeObserver: NSObjectProtocol?

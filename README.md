@@ -4,18 +4,31 @@
 
 This [Capacitor 4](https://capacitorjs.com) plugin is a complete dark mode solution for web, iOS and Android.
 
-On the web and in iOS, dark mode works easily with Ionic because browsers and WKWebView correctly handle the `prefers-color-scheme` CSS property. In Android, on the other hand, `prefers-color-scheme` is [well and truly broken](https://developer.android.com/guide/webapps/dark-theme). I have never seen it work reliably in an Ionic app.
+### ❗️Breaking changes
 
-With this plugin, you can easily enable and control dark mode in your app across **all** platforms, guaranteed!
+If you are currently using v2.x, please note:
 
-A [demo](https://github.com/aparajita/capacitor-dark-mode-demo) is available that illustrates the usage of the API.
+- Because the plugin is now lazy loaded, the suggested way of initializing the plugin has changed.
+- The result type of `isDarkMode` has changed.
+
+## Motivation
+
+On the web and iOS, dark mode works easily with Ionic because browsers and WKWebView correctly handle the `prefers-color-scheme` CSS property. On Android, on the other hand, `prefers-color-scheme` is [well and truly broken](https://developer.android.com/guide/webapps/dark-theme). I have never seen it work reliably in an Ionic app, even with Capacitor 4 and the Android DayNight theme.
+
+With this plugin, you can easily enable and control dark mode in your app across **all** platforms, guaranteed! This means that on Android versions prior to 10 (API 29), which is the first version to support system dark mode, you can allow the user to toggle dark mode.
+
+### Keep it DRY
+
+If you implement dark mode as a user preference, you cannot rely solely on the CSS `prefers-color-scheme` query, you have to use a class to indicate whether or not you are in dark mode. Maintaining an identical set of CSS variables for `prefers-color-scheme: dark` and a dark class selector is error-prone, extra maintenance, and in general violates the DRY principle.
+
+This plugin relies solely on a dark class selector to indicate whether or not you are in dark mode, and manages the dark class for you based on the system dark mode and/or the user preference.
 
 [Installation](#installation) | [Configuration](#configuration) | [Usage](#usage) | [API](#api)
 
 ## Features
 
 - Uniform API for enabling and controlling dark mode across all platforms. 👏
-- Automatic dark mode detection. 👀
+- Automatic dark mode detection (in systems that support dark mode). 👀
 - Support for user dark mode switching. ☀️🌛
 - Support for custom dark mode preference storage. 💾
 - Updates the status bar to match the dark mode, even on Android. 🚀
@@ -30,22 +43,12 @@ In your app:
 pnpm add @aparajita/capacitor-dark-mode
 ```
 
-Then BEFORE the app is mounted:
-
-```typescript
-import { DarkMode } from '@aparajita/capacitor-dark-mode'
-
-// If you need to configure the plugin, pass the options here.
-// See Configuration below for more details.
-DarkMode.init().catch(console.error)
-```
-
 ## Configuration
 
 Once the plugin is installed, you need to:
 
 - Provide a dark mode in your CSS.
-- Initialize/configure the plugin.
+- Initialize the plugin.
 
 ### Dark mode CSS
 
@@ -71,57 +74,81 @@ body.dark {
 }
 ```
 
-> **NOTE:** The `syncStatusBar` feature relies on the presence of the `--backgound` CSS variable, which contains the background color of the body. If you are using custom dark mode CSS, you will need to add that variable to your CSS.
+> 👉🏽 **Note:** The `syncStatusBar` feature relies on the presence of the `--backgound` CSS variable, which contains the background color of the body. If you are using custom dark mode CSS, you will need to add that variable to your CSS.
 
 ### Plugin configuration
 
 If you are using `dark` as the dark mode CSS class and you don’t allow the user to manually set light or dark mode — and thus don’t need to store a preference — you are all set! The plugin does all of the hard work for you.
 
-If you are using a dark mode CSS class other than `dark`, you need to configure the plugin. You will want to do this as early as possible during page load to avoid any visual glitches. For example, if your app uses a dark mode CSS class of `dark-mode`, you should configure the plugin like this:
+If you are using a dark mode CSS class other than `dark`, you need to configure the plugin. You will want to do this just before the app is mounted to avoid any visual glitches. For example, if your app uses a dark mode CSS class of `dark-mode`, you would configure the plugin like this in a Vue-based Ionic app:
 
-**index.html**
-
-```html
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <!-- standard stuff -->
-    <script
-      type="module"
-      src="/src/dark-mode.ts"
-    ></script>
-  </head>
-</html>
-```
-
-**src/dark-mode.ts**
+**main.ts**
 
 ```typescript
-import { DarkMode } from '@aparajita/capacitor-dark-mode'
+const app = createApp(App).use(IonicVue, config).use(router)
 
-DarkMode.init({ cssClass: 'dark-mode' })
+router
+  .isReady()
+  .then(() => {
+    DarkMode.init({ cssClass: 'dark-mode' })
+      .then(() => {
+        app.mount('#app')
+      })
+      .catch(console.error)
+  })
+  .catch(console.error)
 ```
+
+Use the equivalent in a React or Angular-based Ionic app.
+
+> 👉🏽 **Note:** Do not initialize the plugin in the `<head>` of `index.html`, as was recommended in v2.x.
 
 #### Custom preference storage
 
 If you want to store the user’s dark mode preference in a custom location (such as `localStorage`), you must create a getter function that returns the preference, and pass that function to the `init` method.
 
+**prefs.ts**
+
 ```typescript
 import type { DarkModeGetterResult } from '@aparajita/capacitor-dark-mode'
-import { DarkMode, DarkModeAppearance } from '@aparajita/capacitor-dark-mode'
+import { DarkModeAppearance } from '@aparajita/capacitor-dark-mode'
 
-function getAppearancePref(): DarkModeGetterResult {
-  return localStorage.getItem('darkMode')
+const kDarkModePref = 'dark-mode'
+
+export function getAppearancePref(): DarkModeGetterResult {
+  return localStorage.getItem(kDarkModePref)
 }
 
-DarkMode.init({ getter: getAppearancePref })
+export function setAppearancePref(appearance: DarkModeAppearance) {
+  localStorage.setItem(kDarkModePref, appearance)
+}
 ```
 
-The example above used a synchronous function, but you may also use an async getter that returns a Promise, so there are no constraints on how or where you store the preference.
+**main.ts**
+
+```typescript
+import { getAppearancePref } from './prefs'
+
+router
+  .isReady()
+  .then(() => {
+    DarkMode.init({
+      cssClass: 'dark-mode',
+      getter: getAppearancePref
+    })
+      .then(() => {
+        app.mount('#app')
+      })
+      .catch(console.error)
+  })
+  .catch(console.error)
+```
+
+The example above uses a synchronous function, but you may also use an async getter that returns a Promise, so there are no constraints on how or where you store the preference.
 
 ## Usage
 
-I could spend a lot of time explaining detailed usage, but perhaps the best explanation is a full example that uses the entire plugin API and shows how to handle user dark mode preference changes. Check out the demo app [here](https://github.com/aparajita/capacitor-dark-mode-demo). You will especially want to look at [`dark-mode.ts`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/dark-mode.ts) and [`DarkModeDemo.vue`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/components/DarkModeDemo.vue).
+I could spend a lot of time explaining detailed usage, but perhaps the best explanation is a full example that uses the entire plugin API and shows how to handle user dark mode preference changes. Check out the demo app [here](https://github.com/aparajita/capacitor-dark-mode-demo). You will especially want to look at [`prefs.ts`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/prefs.ts) and [`DarkModeDemo.vue`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/components/DarkModeDemo.vue).
 
 ## API
 
@@ -130,6 +157,7 @@ I could spend a lot of time explaining detailed usage, but perhaps the best expl
 - [`init(...)`](#init)
 - [`configure(...)`](#configure)
 - [`isDarkMode()`](#isdarkmode)
+- [`setNativeDarkModeListener(...)`](#setnativedarkmodelistener)
 - [`addAppearanceListener(...)`](#addappearancelistener)
 - [`update(...)`](#update)
 - [Interfaces](#interfaces)
@@ -147,7 +175,7 @@ I could spend a lot of time explaining detailed usage, but perhaps the best expl
 init(options?: DarkModeOptions) => Promise<void>
 ```
 
-Initializes the plugin and optionally configures the dark mode class and getter used to retrieve the current dark mode state. This should be done BEFORE the app is mounted to avoid a flash of the wrong mode.
+Initializes the plugin and optionally configures the dark mode class and getter used to retrieve the current dark mode state. This should be done BEFORE the app is mounted but AFTER the dom is defined (e.g. at the end of the &lt;body&gt;) to avoid a flash of the wrong mode.
 
 | Param   | Type                                           |
 | :------ | :--------------------------------------------- |
@@ -172,19 +200,34 @@ DEPRECATED: Use `init` instead.
 ### isDarkMode()
 
 ```typescript
-isDarkMode() => Promise<boolean>
+isDarkMode() => Promise<IsDarkModeResult>
 ```
 
-web: Returns the result of the 'prefers-color-scheme: dark' media query. native: Returns whether the system is currently in dark mode.
+web: Returns the result of the `prefers-color-scheme: dark` media query.<br><br>native: Returns whether the system is currently in dark mode.
 
-**Returns:** Promise&lt;boolean&gt;
+**Returns:** Promise&lt;<a href="#isdarkmoderesult">IsDarkModeResult</a>&gt;
+
+---
+
+### setNativeDarkModeListener(...)
+
+```typescript
+setNativeDarkModeListener(options: Record<string, unknown>, callback: DarkModeListener) => Promise<string>
+```
+
+| Param    | Type                                                |
+| :------- | :-------------------------------------------------- |
+| options  | <a href="#record">Record</a>&lt;string, unknown&gt; |
+| callback | <a href="#darkmodelistener">DarkModeListener</a>    |
+
+**Returns:** Promise&lt;string&gt;
 
 ---
 
 ### addAppearanceListener(...)
 
 ```typescript
-addAppearanceListener(listener: DarkModeListener) => DarkModeListenerHandle
+addAppearanceListener(listener: DarkModeListener) => Promise<DarkModeListenerHandle>
 ```
 
 Adds a listener that will be called whenever the system appearance changes, whether or not the system appearance matches your current appearance. The listener is called AFTER the dark mode class and status bar are updated by the plugin. The listener will be called with <a href="#darkmodelistenerdata">`DarkModeListenerData`</a> indicating if the current system appearance is dark.<br><br>The returned handle contains a `remove` function which you should be sure to call when the listener is no longer needed, for example when a component is unmounted (which happens a lot with HMR). Otherwise there will be a memory leak and multiple listeners executing the same function.
@@ -193,7 +236,7 @@ Adds a listener that will be called whenever the system appearance changes, whet
 | :------- | :----------------------------------------------- |
 | listener | <a href="#darkmodelistener">DarkModeListener</a> |
 
-**Returns:** <a href="#darkmodelistenerhandle">DarkModeListenerHandle</a>
+**Returns:** Promise&lt;<a href="#darkmodelistenerhandle">DarkModeListenerHandle</a>&gt;
 
 ---
 
@@ -225,13 +268,13 @@ The options passed to `configure`.
 | getter        | <a href="#darkmodegetter">DarkModeGetter</a> | If set, this function will be called to retrieve the current dark mode state instead of `isDarkMode`. For example, you might want to let the user set dark/light mode manually and store that preference somewhere. If the function wants to signal that no value can be retrieved, it should return null or undefined, in which case `isDarkMode` will be used.<br><br>If you are not providing any storage of the dark mode state, don't pass this in the options. |
 | syncStatusBar | boolean                                      | If true, on Android the status bar background and content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>On iOS the status bar background is synced with dark mode by the system.                                                                                                                                                                                                                                    |
 
-#### DarkModeListenerHandle
+#### IsDarkModeResult
 
-When you call `addAppearanceListener`, you get back a handle that you can use to remove the listener. See [addAppearanceListener](#addappearancelistener) for more details.
+Result returned by `isDarkMode`.
 
-| Method     | Signature     |
-| :--------- | :------------ |
-| **remove** | () =&gt; void |
+| Prop | Type    |
+| :--- | :------ |
+| dark | boolean |
 
 #### DarkModeListenerData
 
@@ -240,6 +283,14 @@ Your appearance listener callback will receive this data, indicating whether the
 | Prop | Type    |
 | :--- | :------ |
 | dark | boolean |
+
+#### DarkModeListenerHandle
+
+When you call `addAppearanceListener`, you get back a handle that you can use to remove the listener. See [addAppearanceListener](#addappearancelistener) for more details.
+
+| Method     | Signature     |
+| :--------- | :------------ |
+| **remove** | () =&gt; void |
 
 ### Type Aliases
 
@@ -254,6 +305,14 @@ The type of your getter function.
 Your getter function should return (directly or as a Promise) either:<br><br>- A <a href="#darkmodeappearance">DarkModeAppearance</a> to signify that is the appearance you want<br><br>- null or undefined to signify the system appearance should be used
 
 <code><a href="#darkmodeappearance">DarkModeAppearance</a> | null</code> |
+
+#### Record
+
+Construct a type with a set of properties K of type T
+
+<code>{
+[P in K]: T;
+}</code>
 
 #### DarkModeListener
 
