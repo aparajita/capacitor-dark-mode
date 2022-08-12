@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.0.0](https://github.com/aparajita/capacitor-dark-mode/compare/v2.1.0...v3.0.0) (2022-08-12)
+
+
+### ⚠ BREAKING CHANGES
+
+* Usage and API have changed, see the README.
+
+### Maintenance
+
+* remove ultra-runner ([1a5f595](https://github.com/aparajita/capacitor-dark-mode/commit/1a5f595fe1220e8549851f04e84678acdb9cc81a))
+* use pnpm only, pre/post scripts ([5c8aac1](https://github.com/aparajita/capacitor-dark-mode/commit/5c8aac182e981457cc28cffb2236ed5d5f16a9dd))
+
+
+### Refactoring
+
+* no native-decorator, lazy loading ([6c30703](https://github.com/aparajita/capacitor-dark-mode/commit/6c3070364d08596da87304364900872f4c9bd0de))
+
 ## [2.1.0](https://github.com/aparajita/capacitor-dark-mode/compare/v2.0.2...v2.1.0) (2022-08-06)
 
 
