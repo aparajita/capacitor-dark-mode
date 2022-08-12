@@ -31,7 +31,7 @@
     "prebuild": "pnpm lint",
     "build": "pnpm builder",
     "build.dev": "SOURCE_MAP=--sourceMap pnpm build",
-    "watch": "nodemon --exec 'pnpm build.dev'",
+    "watch": "nodemon --exec 'SOURCE_MAP=--sourceMap pnpm builder'",
     "docgen": "docgen --api DarkModePlugin --output-readme README.md && docgen-format && pnpm lint.prettier README.md",
     "open.ios": "open ios/Plugin.xcworkspace",
     "open.android": "open -b com.google.android.studio android",

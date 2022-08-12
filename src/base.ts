@@ -32,18 +32,12 @@ export default abstract class DarkModeBase
   extends WebPlugin
   implements DarkModePlugin
 {
-  protected native: DarkModePlugin
   private appearance?: DarkModeAppearance
   private darkModeClass = 'dark'
   protected registeredListener = false
   private readonly appearanceListeners = new Set<DarkModeListener>()
   private getter?: DarkModeGetter
   private syncStatusBar = true
-
-  constructor(proxy: DarkModePlugin) {
-    super()
-    this.native = proxy
-  }
 
   protected abstract registerDarkModeListener(): Promise<void>
 
@@ -123,7 +117,7 @@ export default abstract class DarkModeBase
       if (data) {
         systemIsDark = data.dark
       } else {
-        const { dark } = await this.native.isDarkMode()
+        const { dark } = await this.isDarkMode()
         systemIsDark = dark
       }
 

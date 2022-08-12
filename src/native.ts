@@ -1,8 +1,18 @@
 import DarkModeBase from './base'
-import type { DarkModeListenerData, IsDarkModeResult } from './definitions'
+import type {
+  DarkModeListenerData,
+  DarkModePlugin,
+  IsDarkModeResult
+} from './definitions'
 
 // eslint-disable-next-line import/prefer-default-export
 export class DarkModeNative extends DarkModeBase {
+  constructor(capProxy: DarkModePlugin) {
+    super()
+    this.setNativeDarkModeListener = capProxy.setNativeDarkModeListener
+    this.isDarkMode = capProxy.isDarkMode
+  }
+
   protected async registerDarkModeListener(): Promise<void> {
     /*
       On native platforms we use two listeners:
@@ -14,7 +24,7 @@ export class DarkModeNative extends DarkModeBase {
       this.update(data).catch(console.error)
     }
 
-    await this.native.setNativeDarkModeListener({}, onChange)
+    await this.setNativeDarkModeListener({}, onChange)
     this.registeredListener = true
   }
 
