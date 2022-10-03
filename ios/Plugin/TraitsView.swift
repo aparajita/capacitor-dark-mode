@@ -12,32 +12,9 @@ class TraitsView: UIView {
   var appearanceListener: ((UIUserInterfaceStyle) -> Void)?
   private var interfaceStyle = UIScreen.main.traitCollection.userInterfaceStyle
 
-  /*
-   For some reason the userInterfaceStyle changes twice during suspend.
-   We want to ignore that. This flag is set to true on willResignActiveNotification
-   and set to false on willEnterForegroundNotification.
-   */
-  private var ignoreTraitChanges = false
-
   init(withBridge bridge: CAPBridgeProtocol?) {
     super.init(frame: CGRect.zero)
     isHidden = true
-
-    NotificationCenter.default.addObserver(
-      forName: UIApplication.willResignActiveNotification,
-      object: nil,
-      queue: OperationQueue.main
-    ) { [weak self] _ in
-      self?.ignoreTraitChanges = true
-    }
-
-    NotificationCenter.default.addObserver(
-      forName: UIApplication.willEnterForegroundNotification,
-      object: nil,
-      queue: OperationQueue.main
-    ) { [weak self] _ in
-      self?.ignoreTraitChanges = false
-    }
 
     if let view = bridge?.viewController?.view {
       view.insertSubview(self, belowSubview: view)
@@ -51,7 +28,9 @@ class TraitsView: UIView {
   override func traitCollectionDidChange(_ previousTraitCollection: UITraitCollection?) {
     super.traitCollectionDidChange(previousTraitCollection)
 
-    guard !ignoreTraitChanges else {
+    // For some reason we get userInterfaceStyle changes when the app goes
+    // into the background. Ignore those.
+    guard UIApplication.shared.applicationState != .background else {
       return
     }
 
