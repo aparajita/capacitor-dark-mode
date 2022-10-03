@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [3.0.3](https://github.com/aparajita/capacitor-dark-mode/compare/v3.0.2...v3.0.3) (2022-10-03)
+
+
+### Maintenance
+
+* update android deps ([19d1462](https://github.com/aparajita/capacitor-dark-mode/commit/19d146251e6f53687cf21e0a3d3ce11e332b5d28))
+
 ### [3.0.2](https://github.com/aparajita/capacitor-dark-mode/compare/v3.0.1...v3.0.2) (2022-10-03)
 
 
