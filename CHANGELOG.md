@@ -2,6 +2,20 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [3.0.2](https://github.com/aparajita/capacitor-dark-mode/compare/v3.0.1...v3.0.2) (2022-10-03)
+
+
+### Bug Fixes
+
+* ignore spurious changes correctly ([675614e](https://github.com/aparajita/capacitor-dark-mode/commit/675614e7b1435bc2a909ed6d37c5a545bf865478))
+
+
+### Maintenance
+
+* remove extra package.json ([758e912](https://github.com/aparajita/capacitor-dark-mode/commit/758e912dfa403dcb98256e850036514fc644131b))
+* remove native-decorator stuff ([f6d008e](https://github.com/aparajita/capacitor-dark-mode/commit/f6d008eaf4e373ad3462cd104c0b43b7dff52020))
+* update deps ([b63c23c](https://github.com/aparajita/capacitor-dark-mode/commit/b63c23c03057c7ff8ab99aa7179047faacdfba5f))
+
 ### [3.0.1](https://github.com/aparajita/capacitor-dark-mode/compare/v3.0.0...v3.0.1) (2022-08-12)
 
 
