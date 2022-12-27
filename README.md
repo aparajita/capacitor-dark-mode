@@ -262,11 +262,11 @@ Adds or removes the dark mode class on the html element depending on the dark mo
 
 The options passed to `configure`.
 
-| Prop          | Type                                         | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
-| :------------ | :------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| cssClass      | string                                       | The CSS class name to use to toggle dark mode.                                                                                                                                                                                                                                                                                                                                                                                                                       |
-| getter        | <a href="#darkmodegetter">DarkModeGetter</a> | If set, this function will be called to retrieve the current dark mode state instead of `isDarkMode`. For example, you might want to let the user set dark/light mode manually and store that preference somewhere. If the function wants to signal that no value can be retrieved, it should return null or undefined, in which case `isDarkMode` will be used.<br><br>If you are not providing any storage of the dark mode state, don't pass this in the options. |
-| syncStatusBar | boolean                                      | If true, on Android the status bar background and content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>On iOS the status bar background is synced with dark mode by the system.                                                                                                                                                                                                                                    |
+| Prop          | Type                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                          |
+| :------------ | :--------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| cssClass      | string                                                     | The CSS class name to use to toggle dark mode.                                                                                                                                                                                                                                                                                                                                                                                                                       |
+| getter        | <a href="#darkmodegetter">DarkModeGetter</a>               | If set, this function will be called to retrieve the current dark mode state instead of `isDarkMode`. For example, you might want to let the user set dark/light mode manually and store that preference somewhere. If the function wants to signal that no value can be retrieved, it should return null or undefined, in which case `isDarkMode` will be used.<br><br>If you are not providing any storage of the dark mode state, don't pass this in the options. |
+| syncStatusBar | <a href="#darkmodesyncstatusbar">DarkModeSyncStatusBar</a> | If true, on Android the status bar background and content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>If 'textOnly', on Android only the status bar content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>On iOS this option is not used, the status bar background is synced with dark mode by the system.                                                      |
 
 #### IsDarkModeResult
 
@@ -305,6 +305,12 @@ The type of your getter function.
 Your getter function should return (directly or as a Promise) either:<br><br>- A <a href="#darkmodeappearance">DarkModeAppearance</a> to signify that is the appearance you want<br><br>- null or undefined to signify the system appearance should be used
 
 <code><a href="#darkmodeappearance">DarkModeAppearance</a> | null</code> |
+
+#### DarkModeSyncStatusBar
+
+Possible values for the syncStatusBar option.
+
+<code>boolean | 'textOnly'</code>
 
 #### Record
 
