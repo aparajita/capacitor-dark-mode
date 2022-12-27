@@ -50,6 +50,11 @@ export interface DarkModeListenerData {
 export type DarkModeListener = (data: DarkModeListenerData) => void
 
 /**
+ * Possible values for the syncStatusBar option.
+ */
+export type DarkModeSyncStatusBar = boolean | 'textOnly'
+
+/**
  * The options passed to `configure`.
  */
 export interface DarkModeOptions {
@@ -75,9 +80,13 @@ export interface DarkModeOptions {
    * If true, on Android the status bar background and content
    * will be synced with the current `DarkModeAppearance`.
    *
-   * On iOS the status bar background is synced with dark mode by the system.
+   * If 'textOnly', on Android only the status bar content
+   * will be synced with the current `DarkModeAppearance`.
+   *
+   * On iOS this option is not used, the status bar background
+   * is synced with dark mode by the system.
    */
-  syncStatusBar?: boolean
+  syncStatusBar?: DarkModeSyncStatusBar
 }
 
 /**

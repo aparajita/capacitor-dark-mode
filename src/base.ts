@@ -7,6 +7,7 @@ import type {
   DarkModeListenerHandle,
   DarkModeOptions,
   DarkModePlugin,
+  DarkModeSyncStatusBar,
   IsDarkModeResult
 } from './definitions'
 import { DarkModeAppearance } from './definitions'
@@ -37,7 +38,7 @@ export default abstract class DarkModeBase
   protected registeredListener = false
   private readonly appearanceListeners = new Set<DarkModeListener>()
   private getter?: DarkModeGetter
-  private syncStatusBar = true
+  private syncStatusBar: DarkModeSyncStatusBar = true
 
   protected abstract registerDarkModeListener(): Promise<void>
 
@@ -67,7 +68,7 @@ export default abstract class DarkModeBase
       this.getter = getter
     }
 
-    if (typeof syncStatusBar === 'boolean') {
+    if (typeof syncStatusBar === 'boolean' || syncStatusBar === 'textOnly') {
       this.syncStatusBar = syncStatusBar
     }
 
@@ -160,9 +161,11 @@ export default abstract class DarkModeBase
           .trim()
 
         if (bodyBackgroundColor) {
-          await StatusBar.setBackgroundColor({
-            color: normalizeHexColor(bodyBackgroundColor)
-          })
+          if (this.syncStatusBar !== 'textOnly') {
+            await StatusBar.setBackgroundColor({
+              color: normalizeHexColor(bodyBackgroundColor)
+            })
+          }
 
           setStatusBarStyle = true
         }
