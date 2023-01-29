@@ -40,6 +40,11 @@ export default abstract class DarkModeBase
   private getter?: DarkModeGetter
   private syncStatusBar: DarkModeSyncStatusBar = true
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
+  bindToProxy(proxy: DarkModePlugin): void {
+    // no-op except in native
+  }
+
   protected abstract registerDarkModeListener(): Promise<void>
 
   // @native(callback)

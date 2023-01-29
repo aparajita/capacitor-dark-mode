@@ -7,10 +7,9 @@ import type {
 
 // eslint-disable-next-line import/prefer-default-export
 export class DarkModeNative extends DarkModeBase {
-  constructor(capProxy: DarkModePlugin) {
-    super()
-    this.setNativeDarkModeListener = capProxy.setNativeDarkModeListener
-    this.isDarkMode = capProxy.isDarkMode
+  override bindToProxy(proxy: DarkModePlugin): void {
+    this.setNativeDarkModeListener = proxy.setNativeDarkModeListener
+    this.isDarkMode = proxy.isDarkMode
   }
 
   protected async registerDarkModeListener(): Promise<void> {
