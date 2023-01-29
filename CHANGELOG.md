@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+### [3.1.1](https://github.com/aparajita/capacitor-dark-mode/compare/v3.1.0...v3.1.1) (2023-01-29)
+
+
+### Bug Fixes
+
+* eliminate possible race condition ([7d7d5d3](https://github.com/aparajita/capacitor-dark-mode/commit/7d7d5d353f1250f2da0aa99a3fc6f2138e9c0448))
+
 ## [3.1.0](https://github.com/aparajita/capacitor-dark-mode/compare/v3.0.3...v3.1.0) (2022-12-27)
 
 
