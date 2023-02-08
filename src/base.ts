@@ -35,6 +35,7 @@ export default abstract class DarkModeBase
 {
   private appearance?: DarkModeAppearance
   private darkModeClass = 'dark'
+  private statusBarHexColorCssVariable = ''
   protected registeredListener = false
   private readonly appearanceListeners = new Set<DarkModeListener>()
   private getter?: DarkModeGetter
@@ -61,12 +62,17 @@ export default abstract class DarkModeBase
   async init({
     cssClass,
     getter,
-    syncStatusBar
+    syncStatusBar,
+    statusBarHexColorCssVariable
   }: DarkModeOptions = {}): Promise<void> {
     if (cssClass) {
       // Remove the old class if it exists
       document.documentElement.classList.remove(this.darkModeClass)
       this.darkModeClass = cssClass
+    }
+
+    if (statusBarHexColorCssVariable) {
+      this.statusBarHexColorCssVariable = statusBarHexColorCssVariable
     }
 
     if (typeof getter !== 'undefined') {
@@ -162,7 +168,7 @@ export default abstract class DarkModeBase
 
       if (content) {
         const overrideBodyBackgroundColor = getComputedStyle(content)
-        .getPropertyValue('--statusBarBackground')
+        .getPropertyValue(this.statusBarHexColorCssVariable)
         .trim()
 
         // or fallback to regular --background

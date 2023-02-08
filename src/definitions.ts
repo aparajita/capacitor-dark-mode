@@ -86,7 +86,17 @@ export interface DarkModeOptions {
    * On iOS this option is not used, the status bar background
    * is synced with dark mode by the system.
    */
-  syncStatusBar?: DarkModeSyncStatusBar
+  syncStatusBar?: DarkModeSyncStatusBar,
+
+  /**
+   * If set, on Android the status bar BACKGROUND hex color
+   * will be read from this CSS variable.
+   *
+   *
+   * On iOS this option is not used, the status bar background
+   * is synced with dark mode by the system.
+   */
+  statusBarHexColorCssVariable?: string,
 }
 
 /**
