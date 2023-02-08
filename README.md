@@ -74,7 +74,7 @@ body.dark {
 }
 ```
 
-> 👉🏽 **Note:** The `syncStatusBar` feature relies on the presence of the `--backgound` CSS variable, which contains the background color of the body. If you are using custom dark mode CSS, you will need to add that variable to your CSS. The variable must be a regular hex color. If your `--background` CSS variable contains anything else (like a gradient for example), pass a different CSS variable name to init() as the member `statusBarHexColorCssVariable` and it will take preference over `--background`. It must be a regular hex color.
+> 👉🏽 **Note:** The `syncStatusBar` feature relies on the presence of the `--backgound` CSS variable, which contains the background color of the body. If you are using custom dark mode CSS, you will need to add that variable to your CSS. The variable must be a regular hex color. If your `--background` CSS variable contains anything else (like a gradient for example), pass a different CSS variable name to init() in the options member `statusBarHexColorCssVariable` and it will take preference over `--background`. It must be a regular hex color.
 
 ### Plugin configuration
 
