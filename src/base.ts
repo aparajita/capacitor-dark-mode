@@ -161,7 +161,12 @@ export default abstract class DarkModeBase
       const content = document.querySelector('ion-content')
 
       if (content) {
-        const bodyBackgroundColor = getComputedStyle(content)
+        const overrideBodyBackgroundColor = getComputedStyle(content)
+        .getPropertyValue('--statusBarBackground')
+        .trim()
+
+        // or fallback to regular --background
+        const bodyBackgroundColor = overrideBodyBackgroundColor || getComputedStyle(content)
           .getPropertyValue('--background')
           .trim()
 
