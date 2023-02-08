@@ -168,13 +168,13 @@ export default abstract class DarkModeBase
 
       if (content) {
         const overrideBodyBackgroundColor = getComputedStyle(content)
-        .getPropertyValue(this.statusBarHexColorCssVariable)
-        .trim()
+          .getPropertyValue(this.statusBarHexColorCssVariable)
+          .trim()
 
         // or fallback to regular --background
-        const bodyBackgroundColor = overrideBodyBackgroundColor || getComputedStyle(content)
-          .getPropertyValue('--background')
-          .trim()
+        const bodyBackgroundColor =
+          overrideBodyBackgroundColor ||
+          getComputedStyle(content).getPropertyValue('--background').trim()
 
         if (bodyBackgroundColor) {
           if (this.syncStatusBar !== 'textOnly') {
