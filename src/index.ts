@@ -13,4 +13,5 @@ const proxy = registerPlugin<DarkModePlugin>('DarkModeNative', {
 })
 
 export * from './definitions'
+export * from './utils'
 export { proxy as DarkMode }
