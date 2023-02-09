@@ -29,6 +29,20 @@ function normalizeHexColor(hex: string): string {
   return hex
 }
 
+function contrastIsWhite(hex: string): boolean {
+  /* eslint-disable @typescript-eslint/no-magic-numbers */
+  const r = parseInt(`${hex[1]}${hex[2]}`, 16)
+  const g = parseInt(`${hex[3]}${hex[4]}`, 16)
+  const b = parseInt(`${hex[5]}${hex[6]}`, 16)
+
+  const generalTreshold = 156
+  const rTreshold = 0.299
+  const gTreshold = 0.587
+  const bTreshold = 0.114
+
+  return r * rTreshold + g * gTreshold + b * bTreshold < generalTreshold
+}
+
 export default abstract class DarkModeBase
   extends WebPlugin
   implements DarkModePlugin
@@ -57,7 +71,6 @@ export default abstract class DarkModeBase
   ): Promise<string> {
     throw this.unimplemented('setNativeDarkModeListener is native only')
   }
-  /* eslint-enable @typescript-eslint/no-unused-vars */
 
   async init({
     cssClass,
@@ -163,6 +176,8 @@ export default abstract class DarkModeBase
     // On Android we only do so if the user has explicitly requested it.
     let setStatusBarStyle = Capacitor.getPlatform() === 'ios'
 
+    let autoAppearance = appearance
+
     if (this.syncStatusBar && Capacitor.getPlatform() === 'android') {
       const content = document.querySelector('ion-content')
 
@@ -178,6 +193,10 @@ export default abstract class DarkModeBase
         const bodyBackgroundColor = statusBarBackground || contentBackground
 
         if (bodyBackgroundColor) {
+          autoAppearance = contrastIsWhite(bodyBackgroundColor)
+            ? DarkModeAppearance.dark
+            : DarkModeAppearance.light
+
           if (this.syncStatusBar !== 'textOnly') {
             await StatusBar.setBackgroundColor({
               color: normalizeHexColor(bodyBackgroundColor)
@@ -190,7 +209,7 @@ export default abstract class DarkModeBase
     }
 
     if (setStatusBarStyle) {
-      await StatusBar.setStyle({ style: kAppearanceToStyleMap[appearance] })
+      await StatusBar.setStyle({ style: kAppearanceToStyleMap[autoAppearance] })
     }
   }
 }
