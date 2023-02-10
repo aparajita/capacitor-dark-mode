@@ -1,6 +1,21 @@
 /* eslint-disable @typescript-eslint/no-magic-numbers */
-
 // noinspection JSUnusedGlobalSymbols
+
+import { Style } from '@capacitor/status-bar'
+import { DarkModeAppearance } from './definitions'
+
+const kAppearanceToStyleMap = {
+  [DarkModeAppearance.dark]: Style.Dark,
+  [DarkModeAppearance.light]: Style.Light,
+  [DarkModeAppearance.system]: Style.Default
+} as const
+
+const kStyleToAppearanceMap = {
+  [Style.Dark]: DarkModeAppearance.dark,
+  [Style.Light]: DarkModeAppearance.light,
+  [Style.Default]: DarkModeAppearance.system
+}
+
 /**
  * Returns whether the given color is a valid 3 or 6 digit
  * '#'-prefixed hex color.
@@ -18,7 +33,6 @@ export function normalizeHexColor(color: string): string {
   return color
 }
 
-// noinspection JSUnusedGlobalSymbols
 /**
  * Returns whether the given 3 or 6 digit '#'-prefixed hex color
  * is considered a dark color based on its perceived luminance.
@@ -49,4 +63,14 @@ export function isDarkColor(color: string, threshold = 0.5): boolean {
 
   const brightness = (r * 299 + g * 587 + b * 114) / 1000
   return brightness < threshold * 255
+}
+
+// Converts a DarkModeAppearance to a Style
+export function appearanceToStyle(appearance: DarkModeAppearance): Style {
+  return kAppearanceToStyleMap[appearance]
+}
+
+// Converts a Style to a DarkModeAppearance
+export function styleToAppearance(style: Style): DarkModeAppearance {
+  return kStyleToAppearanceMap[style]
 }

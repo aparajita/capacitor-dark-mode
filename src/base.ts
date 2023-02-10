@@ -13,13 +13,12 @@ import type {
   StatusBarStyleGetter
 } from './definitions'
 import { DarkModeAppearance } from './definitions'
-import { isValidHexColor, normalizeHexColor } from './utils'
-
-const kAppearanceToStyleMap = {
-  [DarkModeAppearance.dark]: Style.Dark,
-  [DarkModeAppearance.light]: Style.Light,
-  [DarkModeAppearance.system]: Style.Default
-} as const
+import {
+  appearanceToStyle,
+  isDarkColor,
+  isValidHexColor,
+  normalizeHexColor
+} from './utils'
 
 const kDefaultBackgroundVariable = '--background'
 
@@ -165,8 +164,6 @@ export default abstract class DarkModeBase
         : DarkModeAppearance.light
     }
 
-    let statusBarStyle = kAppearanceToStyleMap[appearance]
-
     if (appearance !== this.appearance) {
       this.disableTransitions()
       this.appearance = appearance
@@ -176,12 +173,8 @@ export default abstract class DarkModeBase
       this.enableTransitions()
     }
 
-    if (this.statusBarStyleGetter) {
-      statusBarStyle = (await this.statusBarStyleGetter()) ?? statusBarStyle
-    }
-
     if (Capacitor.isNativePlatform()) {
-      await this.handleStatusBar(statusBarStyle)
+      await this.handleStatusBar(appearance)
     }
 
     if (data) {
@@ -193,31 +186,55 @@ export default abstract class DarkModeBase
     return Promise.resolve(appearance)
   }
 
-  private async handleStatusBar(statusBarStyle: Style): Promise<void> {
+  private getBackgroundColor(): string {
+    // Try to retrieve the background color variable value from <ion-content>
+    const content = document.querySelector('ion-content')
+
+    if (content) {
+      const color = getComputedStyle(content)
+        .getPropertyValue(this.statusBarBackgroundVariable)
+        .trim()
+
+      if (isValidHexColor(color)) {
+        return normalizeHexColor(color)
+      } else {
+        console.warn(
+          `Invalid hex color '${color}' for ${this.statusBarBackgroundVariable}`
+        )
+      }
+    }
+
+    return ''
+  }
+
+  private async handleStatusBar(appearance: DarkModeAppearance): Promise<void> {
     // On iOS we always need to update the status bar appearance
     // to match light/dark mode. On Android we only do so if the user
     // has explicitly requested it.
     let setStatusBarStyle = Capacitor.getPlatform() === 'ios'
+    let statusBarStyle = appearanceToStyle(appearance)
 
     if (this.syncStatusBar && Capacitor.getPlatform() === 'android') {
-      const content = document.querySelector('ion-content')
+      setStatusBarStyle = true
 
-      if (content) {
-        const backgroundColor = getComputedStyle(content)
-          .getPropertyValue(this.statusBarBackgroundVariable)
-          .trim()
+      if (this.syncStatusBar !== 'textOnly') {
+        const color = this.getBackgroundColor()
 
-        if (backgroundColor) {
-          if (
-            this.syncStatusBar !== 'textOnly' &&
-            isValidHexColor(backgroundColor)
-          ) {
-            await StatusBar.setBackgroundColor({
-              color: normalizeHexColor(backgroundColor)
-            })
+        if (color) {
+          await StatusBar.setBackgroundColor({ color })
+
+          if (this.statusBarStyleGetter) {
+            const style = await this.statusBarStyleGetter(statusBarStyle, color)
+
+            if (style) {
+              statusBarStyle = style
+            }
+          } else {
+            statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
           }
-
-          setStatusBarStyle = true
+        } else {
+          // We aren't changing the status bar color, no need to set the style
+          setStatusBarStyle = false
         }
       }
     }
