@@ -2,6 +2,25 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.2.0](https://github.com/aparajita/capacitor-dark-mode/compare/v3.1.1...v3.2.0) (2023-02-10)
+
+
+### Features
+
+* export more utilities ([e961637](https://github.com/aparajita/capacitor-dark-mode/commit/e961637e6bfc129602cc90e59e1fb933a80fef45))
+* status bar color and transition options where is open YouTube ([0e7b6c6](https://github.com/aparajita/capacitor-dark-mode/commit/0e7b6c6b9e4b6b2d92fe64a218aee8a872a566f1))
+
+
+### Maintenance
+
+* API tweaks ([eca281e](https://github.com/aparajita/capacitor-dark-mode/commit/eca281edaed3b53af1d62f89a8b5243428a9e82e))
+* update deps ([b257cba](https://github.com/aparajita/capacitor-dark-mode/commit/b257cba8a1f9f6f35e0e1077651eb21efc61afdb))
+
+
+### Docs
+
+* update for new features ([f82d86c](https://github.com/aparajita/capacitor-dark-mode/commit/f82d86c763011bbcf045e0f6f6bac075c11e8483))
+
 ### [3.1.1](https://github.com/aparajita/capacitor-dark-mode/compare/v3.1.0...v3.1.1) (2023-01-29)
 
 
