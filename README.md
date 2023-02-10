@@ -2,7 +2,7 @@
 
 # capacitor-dark-mode&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode)
 
-This [Capacitor 4](https://capacitorjs.com) plugin is a complete dark mode solution for web, iOS and Android.
+This [Capacitor 4](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
 
 ### ❗️Breaking changes
 
@@ -19,7 +19,7 @@ With this plugin, you can easily enable and control dark mode in your app across
 
 ### Keep it DRY
 
-If you implement dark mode as a user preference, you cannot rely solely on the CSS `prefers-color-scheme` query, you have to use a class to indicate whether or not you are in dark mode. Maintaining an identical set of CSS variables for `prefers-color-scheme: dark` and a dark class selector is error-prone, extra maintenance, and in general violates the DRY principle.
+If you implement dark mode as a user preference, you cannot rely solely on the CSS `prefers-color-scheme` query anyway; you have to use a class to indicate whether or not you are in dark mode. Maintaining an identical set of CSS variables for `prefers-color-scheme: dark` and a dark class selector is error-prone, extra maintenance, and in general violates the DRY principle.
 
 This plugin relies solely on a dark class selector to indicate whether or not you are in dark mode, and manages the dark class for you based on the system dark mode and/or the user preference.
 
@@ -32,6 +32,7 @@ This plugin relies solely on a dark class selector to indicate whether or not yo
 - Support for user dark mode switching. ☀️🌛
 - Support for custom dark mode preference storage. 💾
 - Updates the status bar to match the dark mode, even on Android. 🚀
+- Custom status bar colors on Android. 🌈
 - Register listeners for system dark mode changes. 🔥
 - Extensive documentation. 📚
 
@@ -54,6 +55,8 @@ Once the plugin is installed, you need to:
 
 This plugin adds or removes a CSS class to the `body` element when necessary. By default, the class is `dark`, but you can configure it to be whatever you want.
 
+> 👉🏽 **Note:** If you are using Tailwind’s [dark mode support](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually), set `darkMode: 'class'` in your Tailwind config file. Although the examples they give put the `dark` class on the `html` element, Tailwind’s dark mode does work with the `dark` class on the `body` element.
+
 It is up to you to configure your CSS to actually implement dark mode when that class is present. A good place to start is the standard [Ionic dark mode](https://ionicframework.com/docs/theming/dark-mode#ionic-dark-theme), which relies on the CSS variables that control Ionic component appearance.
 
 If you have an existing CSS dark theme which relies on `prefers-color-scheme`, you should remove all `@media (prefers-color-scheme: dark)` rules and instead use `body.dark` as the dark mode selector. There is NO need to duplicate the dark mode in both a `@media (prefers-color-scheme: dark)` block and a `body.dark` block. That’s one of the advantages of using this plugin!
@@ -74,8 +77,6 @@ body.dark {
 }
 ```
 
-> 👉🏽 **Note:** The `syncStatusBar` feature relies on the presence of the `--backgound` CSS variable, which contains the background color of the body. If you are using custom dark mode CSS, you will need to add that variable to your CSS.
-
 ### Plugin configuration
 
 If you are using `dark` as the dark mode CSS class and you don’t allow the user to manually set light or dark mode — and thus don’t need to store a preference — you are all set! The plugin does all of the hard work for you.
@@ -90,6 +91,7 @@ const app = createApp(App).use(IonicVue, config).use(router)
 router
   .isReady()
   .then(() => {
+    // configure() is a synonym for init()
     DarkMode.init({ cssClass: 'dark-mode' })
       .then(() => {
         app.mount('#app')
@@ -145,6 +147,51 @@ router
 ```
 
 The example above uses a synchronous function, but you may also use an async getter that returns a Promise, so there are no constraints on how or where you store the preference.
+
+#### Android status bar customization
+
+On Android, there are several additional options you can pass to `init()/configure()` that control what happens to the status bar when dark mode is toggled.
+
+**syncStatusBar**<br>
+If `syncStatusBar` is `true`, the status bar will be updated to match the dark mode. This is the default behavior.
+
+**statusBarBackgroundVariable**<br>
+When `syncStatusBar` is `true`, by default the status bar background will set to the value of the `--background` CSS variable on the `ion-content` element, which is defined by `ion-content` as:
+
+```css
+ion-content {
+  /*
+    The stock Ionic theme sets --ion-background-color
+    in dork mode.
+   */
+  --background: var(--ion-background-color, #fff);
+}
+```
+
+If you want to use a different color for the status bar, you can set `statusBarBackgroundVariable` to the name of a different CSS variable. You can then set that variable accordingly in your CSS.
+
+If the value of the variable is not a valid 3 or 6-digit '#'-prefixed hex color, no change is made.
+
+**statusBarStyleGetter**<br>
+When `syncStatusBar` is `true` and a valid background color is set, by default the status bar style will be set according to the luminance of the background color:
+
+```typescript
+// Default threshold is 0.5
+const statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
+```
+
+If you want to use a different style, you can set `statusBarStyleGetter` to a function that returns the style to use. The function will be called with the current `Style` (based on the appearance setting, not the background color) and the status bar background color, and should return the `Style` that the status bar should be set to.
+
+For example, you could use `isDarkColor()` (which is exported by the plugin) with a different threshold:
+
+```typescript
+import { Style } from '@capacitor/status-bar'
+
+const statusBarStyleGetter = (style: Style, color: string) => {
+  const isDark = isDarkColor(color, 0.4)
+  return isDark ? Style.Dark : Style.Light
+}
+```
 
 ## Usage
 
