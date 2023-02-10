@@ -221,16 +221,15 @@ export default abstract class DarkModeBase
     // has explicitly requested it.
     let setStatusBarStyle = Capacitor.getPlatform() === 'ios'
     let statusBarStyle = appearanceToStyle(appearance)
+    let color = ''
 
     if (this.syncStatusBar && Capacitor.getPlatform() === 'android') {
       setStatusBarStyle = true
 
       if (this.syncStatusBar !== 'textOnly') {
-        const color = this.getBackgroundColor()
+        color = this.getBackgroundColor()
 
         if (color) {
-          await StatusBar.setBackgroundColor({ color })
-
           if (this.statusBarStyleGetter) {
             const style = await this.statusBarStyleGetter(statusBarStyle, color)
 
@@ -247,8 +246,16 @@ export default abstract class DarkModeBase
       }
     }
 
-    if (setStatusBarStyle) {
-      await StatusBar.setStyle({ style: statusBarStyle })
+    const actions: Array<Promise<void>> = []
+
+    if (color) {
+      actions.push(StatusBar.setBackgroundColor({ color }))
     }
+
+    if (setStatusBarStyle) {
+      actions.push(StatusBar.setStyle({ style: statusBarStyle }))
+    }
+
+    await Promise.all(actions)
   }
 }
