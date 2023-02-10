@@ -41,6 +41,7 @@ export default abstract class DarkModeBase
 
   // @native(callback)
   /* eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/require-await */
+
   // noinspection JSUnusedLocalSymbols
   async setNativeDarkModeListener(
     options: Record<string, unknown>,
@@ -48,6 +49,7 @@ export default abstract class DarkModeBase
   ): Promise<string> {
     throw this.unimplemented('setNativeDarkModeListener is native only')
   }
+
   /* eslint-enable @typescript-eslint/no-unused-vars,@typescript-eslint/require-await */
 
   async init({
@@ -56,7 +58,7 @@ export default abstract class DarkModeBase
     getter,
     syncStatusBar,
     statusBarStyleGetter,
-    handleTransitions
+    disableTransitions
   }: DarkModeOptions = {}): Promise<void> {
     if (cssClass) {
       // Remove the old class if it exists
@@ -80,8 +82,8 @@ export default abstract class DarkModeBase
       this.statusBarStyleGetter = statusBarStyleGetter
     }
 
-    if (typeof handleTransitions !== 'undefined') {
-      this.handleTransitions = handleTransitions
+    if (typeof disableTransitions !== 'undefined') {
+      this.handleTransitions = disableTransitions
     }
 
     if (!this.registeredListener) {
@@ -114,8 +116,15 @@ export default abstract class DarkModeBase
 
     if (!this.disableTransitionsStyle) {
       this.disableTransitionsStyle = document.createElement('style')
-      this.disableTransitionsStyle.innerText =
-        '* { transition: none !important; --transition: none !important; }'
+      this.disableTransitionsStyle.innerText = `
+      * {
+        transition: none !important;
+        --transition: none !important;
+      }
+
+      ion-content::part(background) {
+        transition: none !important;
+      }`
     }
 
     document.head.appendChild(this.disableTransitionsStyle)
@@ -130,7 +139,6 @@ export default abstract class DarkModeBase
       const style = this.disableTransitionsStyle
       window.setTimeout(() => {
         document.head.removeChild(style)
-        // eslint-disable-next-line @typescript-eslint/no-magic-numbers
       }, 100)
     }
   }

@@ -23,6 +23,16 @@ export enum DarkModeAppearance {
 export type DarkModeGetterResult = DarkModeAppearance | null | undefined
 
 /**
+ * Your style getter function should return (directly or as a Promise)
+ * either:
+ *
+ * - A Style to signify that is the style you want
+ *
+ * - null or undefined to signify the default behavior should be used
+ */
+export type StatusBarStyleGetterResult = Style | null | undefined
+
+/**
  * The type of your appearance getter function.
  */
 export type DarkModeGetter = () =>
@@ -30,21 +40,12 @@ export type DarkModeGetter = () =>
   | Promise<DarkModeGetterResult>
 
 /**
- * Your status bar style getter function should return (directly or as a Promise)
- * either:
- *
- * - A Style to signify that is the style you want
- *
- * - null or undefined to signify the system appearance should be used
- */
-export type StatusBarStyleGetterResult = Style | null | undefined
-
-/**
  * The type of your status bar style getter function.
  */
-export type StatusBarStyleGetter = () =>
-  | StatusBarStyleGetterResult
-  | Promise<StatusBarStyleGetterResult>
+export type StatusBarStyleGetter = (
+  style?: Style,
+  backgroundColor?: string
+) => StatusBarStyleGetterResult | Promise<StatusBarStyleGetterResult>
 
 /**
  * When you call `addAppearanceListener`, you get back a handle
@@ -83,14 +84,6 @@ export interface DarkModeOptions {
   cssClass?: string
 
   /**
-   * Android only
-   *
-   * If set, this CSS variable will be used instead of '--background'
-   * to set the status bar background color.
-   */
-  statusBarBackgroundVariable?: string
-
-  /**
    * If set, this function will be called to retrieve the current
    * dark mode state instead of `isDarkMode`. For example, you
    * might want to let the user set dark/light mode manually and
@@ -102,6 +95,21 @@ export interface DarkModeOptions {
    * don't pass this in the options.
    */
   getter?: DarkModeGetter
+
+  /**
+   * If true, the plugin will automatically
+   * disable all transitions when dark mode is toggled.
+   * This is to prevent different elements from switching
+   * between light and dark mode at different rates.
+   * <ion-item>, for example, by default has a transition
+   * on all of its properties.
+   *
+   * Set this to false if you want to handle transitions
+   * yourself.
+   *
+   * @default true
+   */
+  disableTransitions?: boolean
 
   /**
    * Android only
@@ -122,28 +130,21 @@ export interface DarkModeOptions {
   /**
    * Android only
    *
+   * If set, this CSS variable will be used instead of '--background'
+   * to set the status bar background color.
+   */
+  statusBarBackgroundVariable?: string
+
+  /**
+   * Android only
+   *
    * If set, and `syncStatusBar` is true, this function will be called
    * to retrieve the current status bar style instead of basing it on
    * the dark mode. If the function wants to signal that no value can
-   * be retrieved, it should return null or undefined, in which case
-   * `isDarkMode` will be used.
+   * be retrieved, it should return a falsey value, in which case
+   * the current appearance will be used to determine the style.
    */
   statusBarStyleGetter?: StatusBarStyleGetter
-
-  /**
-   * If true, the plugin will automatically
-   * disable all transitions when dark mode is toggled.
-   * This is to prevent different elements from switching
-   * between light and dark mode at different rates.
-   * <ion-item>, for example, by default has a transition
-   * on all of its properties.
-   *
-   * Set this to false if you want to handle transitions
-   * yourself.
-   *
-   * @default true
-   */
-  handleTransitions?: boolean
 }
 
 /**
