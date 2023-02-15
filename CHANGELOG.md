@@ -2,6 +2,18 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [3.3.0](https://github.com/aparajita/capacitor-dark-mode/compare/v3.2.1...v3.3.0) (2023-02-15)
+
+
+### Features
+
+* added appearance setter to config ([a591f6a](https://github.com/aparajita/capacitor-dark-mode/commit/a591f6aa4013242983b3239a9bad9ba5c3aa7806))
+
+
+### Maintenance
+
+* remove husky, update deps ([f7a789b](https://github.com/aparajita/capacitor-dark-mode/commit/f7a789bb752d083bd3af83e5a8dec7996b9b47f1))
+
 ## [3.2.1](https://github.com/aparajita/capacitor-dark-mode/compare/v3.2.0...v3.2.1) (2023-02-10)
 
 

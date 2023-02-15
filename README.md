@@ -295,7 +295,7 @@ Adds a listener that will be called whenever the system appearance changes, whet
 update(data?: DarkModeListenerData) => Promise<DarkModeAppearance>
 ```
 
-Adds or removes the dark mode class on the html element depending on the dark mode state. You do NOT need to call this when the system appearance changes.<br><br>If you are manually setting the appearance, you should call this method after the value returned by the configured getter would change.<br><br>Returns the current dark mode state.
+Adds or removes the dark mode class on the html element depending on the dark mode state. You do NOT need to call this when the system appearance changes.<br><br>If you are manually setting the appearance and you have specified a getter function, you should call this method AFTER the value returned by the configured getter changes.<br><br>Returns the current appearance.
 
 | Param | Type                                                     |
 | :---- | :------------------------------------------------------- |
@@ -315,6 +315,7 @@ The options passed to `configure`.
 | :-------------------------- | :--------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
 | cssClass                    | string                                                     | The CSS class name to use to toggle dark mode.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
 | getter                      | <a href="#darkmodegetter">DarkModeGetter</a>               | If set, this function will be called to retrieve the current dark mode state instead of `isDarkMode`. For example, you might want to let the user set dark/light mode manually and store that preference somewhere. If the function wants to signal that no value can be retrieved, it should return null or undefined, in which case `isDarkMode` will be used.<br><br>If you are not providing any storage of the dark mode state, don't pass this in the options.                                |
+| setter                      | <a href="#darkmodesetter">DarkModeSetter</a>               | If set, this function will be called to set the current dark mode state when `update` is called. For example, you might want to let the user set dark/light mode manually and store that preference somewhere, such as localStorage.                                                                                                                                                                                                                                                                |
 | disableTransitions          | boolean                                                    | If true, the plugin will automatically disable all transitions when dark mode is toggled. This is to prevent different elements from switching between light and dark mode at different rates. &lt;ion-item&gt;, for example, by default has a transition on all of its properties.<br><br>Set this to false if you want to handle transitions yourself.                                                                                                                                            |
 | syncStatusBar               | <a href="#darkmodesyncstatusbar">DarkModeSyncStatusBar</a> | Android only<br><br>If `statusBarStyleGetter` is set, this option is unused.<br><br>If true, on Android the status bar background and content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>If 'textOnly', on Android only the status bar content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>On iOS this option is not used, the status bar background is synced with dark mode by the system. |
 | statusBarBackgroundVariable | string                                                     | Android only<br><br>If set, this CSS variable will be used instead of '--background' to set the status bar background color.                                                                                                                                                                                                                                                                                                                                                                        |
@@ -357,6 +358,12 @@ The type of your appearance getter function.
 Your appearance getter function should return (directly or as a Promise) either:<br><br>- A <a href="#darkmodeappearance">DarkModeAppearance</a> to signify that is the appearance you want<br><br>- null or undefined to signify the system appearance should be used
 
 <code><a href="#darkmodeappearance">DarkModeAppearance</a> | null</code> |
+
+#### DarkModeSetter
+
+The type of your appearance setter function.
+
+<code>(appearance: <a href="#darkmodeappearance">DarkModeAppearance</a>): void | Promise&lt;void&gt;</code>
 
 #### DarkModeSyncStatusBar
 
