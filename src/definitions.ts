@@ -40,6 +40,13 @@ export type DarkModeGetter = () =>
   | Promise<DarkModeGetterResult>
 
 /**
+ * The type of your appearance setter function.
+ */
+export type DarkModeSetter = (
+  appearance: DarkModeAppearance
+) => void | Promise<void>
+
+/**
  * The type of your status bar style getter function.
  */
 export type StatusBarStyleGetter = (
@@ -95,6 +102,14 @@ export interface DarkModeOptions {
    * don't pass this in the options.
    */
   getter?: DarkModeGetter
+
+  /**
+   * If set, this function will be called to set the current
+   * dark mode state when `update` is called. For example, you
+   * might want to let the user set dark/light mode manually and
+   * store that preference somewhere, such as localStorage.
+   */
+  setter?: DarkModeSetter
 
   /**
    * If true, the plugin will automatically
@@ -203,11 +218,11 @@ export interface DarkModePlugin extends WebPlugin {
    * depending on the dark mode state. You do NOT need to call
    * this when the system appearance changes.
    *
-   * If you are manually setting the appearance, you should
-   * call this method after the value returned by
-   * the configured getter would change.
+   * If you are manually setting the appearance and you have specified
+   * a getter function, you should call this method AFTER the value returned
+   * by the configured getter changes.
    *
-   * Returns the current dark mode state.
+   * Returns the current appearance.
    */
   update: (data?: DarkModeListenerData) => Promise<DarkModeAppearance>
 }

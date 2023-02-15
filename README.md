@@ -107,7 +107,7 @@ Use the equivalent in a React or Angular-based Ionic app.
 
 #### Custom preference storage
 
-If you want to store the user’s dark mode preference in a custom location (such as `localStorage`), you must create a getter function that returns the preference, and pass that function to the `init` method.
+If you want to store the user’s dark mode preference in a custom location (such as `localStorage`), you must create a getter function that returns the preference and a setter that stores the preference, and pass those functions to the `init` or `configure` method.
 
 **prefs.ts**
 
@@ -129,14 +129,15 @@ export function setAppearancePref(appearance: DarkModeAppearance) {
 **main.ts**
 
 ```typescript
-import { getAppearancePref } from './prefs'
+import { getAppearancePref, setAppearancePref } from './prefs'
 
 router
   .isReady()
   .then(() => {
     DarkMode.init({
       cssClass: 'dark-mode',
-      getter: getAppearancePref
+      getter: getAppearancePref,
+      setter: setAppearancePref
     })
       .then(() => {
         app.mount('#app')
@@ -180,7 +181,8 @@ When `syncStatusBar` is `true` and a valid background color is set, by default t
 const statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
 ```
 
-If you want to use a different style, you can set `statusBarStyleGetter` to a function that returns the style to use. The function will be called with the current `Style` (based on the appearance setting, not the background color) and the status bar background color, and should return the `Style` that the status bar should be set to.
+If you want to use a different style, you can set `statusBarStyleGetter` to a function that returns the style to use. The function will be called with the current `Style` (based on the appearance setting, not the background color) and the status bar background color, and should return the `Style` that the status bar s
+hould be set to.
 
 For example, you could use `isDarkColor()` (which is exported by the plugin) with a different threshold:
 

@@ -8,17 +8,13 @@ import type {
   DarkModeListenerHandle,
   DarkModeOptions,
   DarkModePlugin,
+  DarkModeSetter,
   DarkModeSyncStatusBar,
   IsDarkModeResult,
   StatusBarStyleGetter
 } from './definitions'
 import { DarkModeAppearance } from './definitions'
-import {
-  appearanceToStyle,
-  isDarkColor,
-  isValidHexColor,
-  normalizeHexColor
-} from './utils'
+import { isDarkColor, isValidHexColor, normalizeHexColor } from './utils'
 
 const kDefaultBackgroundVariable = '--background'
 
@@ -26,11 +22,12 @@ export default abstract class DarkModeBase
   extends WebPlugin
   implements DarkModePlugin
 {
-  private appearance?: DarkModeAppearance
+  private appearance = DarkModeAppearance.system
   private darkModeClass = 'dark'
   protected registeredListener = false
   private readonly appearanceListeners = new Set<DarkModeListener>()
   private getter?: DarkModeGetter
+  private setter?: DarkModeSetter
   private statusBarStyleGetter?: StatusBarStyleGetter
   private syncStatusBar: DarkModeSyncStatusBar = true
   private statusBarBackgroundVariable = kDefaultBackgroundVariable
@@ -56,6 +53,7 @@ export default abstract class DarkModeBase
     cssClass,
     statusBarBackgroundVariable,
     getter,
+    setter,
     syncStatusBar,
     statusBarStyleGetter,
     disableTransitions
@@ -70,19 +68,23 @@ export default abstract class DarkModeBase
       // eslint-disable-next-line @typescript-eslint/prefer-nullish-coalescing
       statusBarBackgroundVariable || kDefaultBackgroundVariable
 
-    if (typeof getter !== 'undefined') {
+    if (typeof getter === 'function') {
       this.getter = getter
+    }
+
+    if (typeof setter === 'function') {
+      this.setter = setter
     }
 
     if (typeof syncStatusBar === 'boolean' || syncStatusBar === 'textOnly') {
       this.syncStatusBar = syncStatusBar
     }
 
-    if (typeof statusBarStyleGetter !== 'undefined') {
+    if (typeof statusBarStyleGetter === 'function') {
       this.statusBarStyleGetter = statusBarStyleGetter
     }
 
-    if (typeof disableTransitions !== 'undefined') {
+    if (typeof disableTransitions === 'boolean') {
       this.handleTransitions = disableTransitions
     }
 
@@ -143,55 +145,54 @@ export default abstract class DarkModeBase
     }
   }
 
-  /**
-   * Get the stored appearance. If there is no stored appearance or the appearance
-   * is DarkModeAppearance.system, then we need to check the system appearance.
-   * Once we determine the appearance, set the dark mode class accordingly.
-   */
   async update(data?: DarkModeListenerData): Promise<DarkModeAppearance> {
-    let storedAppearance = DarkModeAppearance.system
+    // Assume the appearance and dark mode did not change
+    let darkMode: boolean
 
-    if (this.getter) {
-      storedAppearance = (await this.getter()) ?? DarkModeAppearance.system
-    }
+    if (data) {
+      // If we have data, that means the system appearance changed.
+      // Use it to determine the new dark mode.
+      darkMode = data.dark
+    } else {
+      if (this.getter) {
+        // The user changed the appearance and triggered an update,
+        // so we need to get the new appearance.
+        const getterResult = await this.getter()
 
-    let appearance = storedAppearance
-
-    if (storedAppearance === DarkModeAppearance.system) {
-      let systemIsDark: boolean
-
-      if (data) {
-        systemIsDark = data.dark
-      } else {
-        const { dark } = await this.isDarkMode()
-        systemIsDark = dark
+        if (getterResult) {
+          this.appearance = getterResult
+        }
       }
 
-      appearance = systemIsDark
-        ? DarkModeAppearance.dark
-        : DarkModeAppearance.light
+      // If the appearance changed and is system, get the current dark mode.
+      if (this.appearance === DarkModeAppearance.system) {
+        darkMode = (await this.isDarkMode()).dark
+      } else {
+        // Otherwise, use the new appearance to determine the dark mode.
+        // Note at this point, this.isDark is the previous dark mode.
+        darkMode = this.appearance === DarkModeAppearance.dark
+      }
     }
 
-    if (appearance !== this.appearance) {
-      this.disableTransitions()
-      this.appearance = appearance
-      document.body.classList[
-        appearance === DarkModeAppearance.dark ? 'add' : 'remove'
-      ](this.darkModeClass)
-      this.enableTransitions()
-    }
+    this.disableTransitions()
+    document.body.classList[darkMode ? 'add' : 'remove'](this.darkModeClass)
+    this.enableTransitions()
 
     if (Capacitor.isNativePlatform()) {
-      await this.handleStatusBar(appearance)
+      await this.handleStatusBar(darkMode)
     }
 
     if (data) {
-      this.appearanceListeners.forEach((listener) => {
+      if (this.setter) {
+        await this.setter(this.appearance)
+      }
+
+      for (const listener of this.appearanceListeners) {
         listener(data)
-      })
+      }
     }
 
-    return Promise.resolve(appearance)
+    return Promise.resolve(this.appearance)
   }
 
   private getBackgroundColor(): string {
@@ -215,12 +216,12 @@ export default abstract class DarkModeBase
     return ''
   }
 
-  private async handleStatusBar(appearance: DarkModeAppearance): Promise<void> {
+  private async handleStatusBar(darkMode: boolean): Promise<void> {
     // On iOS we always need to update the status bar appearance
     // to match light/dark mode. On Android we only do so if the user
     // has explicitly requested it.
     let setStatusBarStyle = Capacitor.getPlatform() === 'ios'
-    let statusBarStyle = appearanceToStyle(appearance)
+    let statusBarStyle = darkMode ? Style.Dark : Style.Light
     let color = ''
 
     if (this.syncStatusBar && Capacitor.getPlatform() === 'android') {
