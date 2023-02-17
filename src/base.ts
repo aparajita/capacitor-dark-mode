@@ -118,15 +118,7 @@ export default abstract class DarkModeBase
 
     if (!this.disableTransitionsStyle) {
       this.disableTransitionsStyle = document.createElement('style')
-      this.disableTransitionsStyle.innerText = `
-      * {
-        transition: none !important;
-        --transition: none !important;
-      }
-
-      ion-content::part(background) {
-        transition: none !important;
-      }`
+      this.disableTransitionsStyle.innerText = `* { transition: none !important; --transition: none !important; } ion-content::part(background) { transition: none !important; }`
     }
 
     document.head.appendChild(this.disableTransitionsStyle)
@@ -140,7 +132,9 @@ export default abstract class DarkModeBase
     if (this.disableTransitionsStyle) {
       const style = this.disableTransitionsStyle
       window.setTimeout(() => {
-        document.head.removeChild(style)
+        if (document.head.contains(style)) {
+          document.head.removeChild(style)
+        }
       }, 100)
     }
   }
