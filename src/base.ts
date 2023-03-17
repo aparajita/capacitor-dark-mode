@@ -167,7 +167,6 @@ export default abstract class DarkModeBase
       // Note at this point, this.isDark is the previous dark mode.
       darkMode = this.appearance === DarkModeAppearance.dark
     }
-    // }
 
     this.disableTransitions()
     document.body.classList[darkMode ? 'add' : 'remove'](this.darkModeClass)
