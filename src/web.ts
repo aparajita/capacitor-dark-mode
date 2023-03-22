@@ -8,7 +8,6 @@ export class DarkModeWeb extends DarkModeBase {
   protected async registerDarkModeListener(): Promise<void> {
     // On the web, we can use a MediaQueryList listener.
     const onChange = (ev: MediaQueryListEvent): void => {
-      console.log('DarkModeWeb.onChange', ev.matches)
       this.update({ dark: ev.matches }).catch(console.error)
     }
 

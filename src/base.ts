@@ -144,7 +144,6 @@ export default abstract class DarkModeBase
     const oldDarkMode = document.body.classList.contains(this.darkModeClass)
     let darkMode: boolean
     let appearance = this.appearance
-    console.log('update', data)
 
     // The appearance changed, either by the system or by the user.
     // See if there is a stored appearance.
