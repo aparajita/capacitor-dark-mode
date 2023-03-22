@@ -141,51 +141,53 @@ export default abstract class DarkModeBase
 
   async update(data?: DarkModeListenerData): Promise<DarkModeAppearance> {
     // Assume the appearance and dark mode did not change
+    const oldDarkMode = document.body.classList.contains(this.darkModeClass)
     let darkMode: boolean
+    let appearance = this.appearance
+    console.log('update', data)
 
-    if (data) {
-      // If we have data, that means the system appearance changed.
-      // Use it to determine the new dark mode.
-      darkMode = data.dark
+    // The appearance changed, either by the system or by the user.
+    // See if there is a stored appearance.
+    if (this.getter) {
+      const getterResult = await this.getter()
+
+      if (getterResult) {
+        appearance = getterResult
+      }
+    }
+
+    // If the appearance is system, use the current dark mode.
+    if (appearance === DarkModeAppearance.system) {
+      darkMode = data ? data.dark : (await this.isDarkMode()).dark
     } else {
-      if (this.getter) {
-        // The user changed the appearance and triggered an update,
-        // so we need to get the new appearance.
-        const getterResult = await this.getter()
+      // Otherwise, use the appearance to determine the dark mode.
+      darkMode = appearance === DarkModeAppearance.dark
+    }
 
-        if (getterResult) {
-          this.appearance = getterResult
-        }
-      }
+    // If the dark mode changed, update the body class and status bar.
+    if (darkMode !== oldDarkMode) {
+      this.disableTransitions()
+      document.body.classList[darkMode ? 'add' : 'remove'](this.darkModeClass)
+      this.enableTransitions()
 
-      // If the appearance changed and is system, get the current dark mode.
-      if (this.appearance === DarkModeAppearance.system) {
-        darkMode = (await this.isDarkMode()).dark
-      } else {
-        // Otherwise, use the new appearance to determine the dark mode.
-        // Note at this point, this.isDark is the previous dark mode.
-        darkMode = this.appearance === DarkModeAppearance.dark
+      if (Capacitor.isNativePlatform()) {
+        await this.handleStatusBar(darkMode)
       }
     }
 
-    this.disableTransitions()
-    document.body.classList[darkMode ? 'add' : 'remove'](this.darkModeClass)
-    this.enableTransitions()
-
-    if (Capacitor.isNativePlatform()) {
-      await this.handleStatusBar(darkMode)
+    // If the appearance changed, update the stored appearance.
+    if (this.setter && this.appearance !== appearance) {
+      await this.setter(appearance)
     }
 
+    // Notify listeners of the changes by the system.
     if (data) {
-      if (this.setter) {
-        await this.setter(this.appearance)
-      }
-
       for (const listener of this.appearanceListeners) {
         listener(data)
       }
     }
 
+    this.appearance = appearance
     return Promise.resolve(this.appearance)
   }
 
