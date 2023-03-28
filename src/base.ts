@@ -168,10 +168,12 @@ export default abstract class DarkModeBase
       this.disableTransitions()
       document.body.classList[darkMode ? 'add' : 'remove'](this.darkModeClass)
       this.enableTransitions()
+    }
 
-      if (Capacitor.isNativePlatform()) {
-        await this.handleStatusBar(darkMode)
-      }
+    // Always update the status bar to match the dark mode. This ensures
+    // the status bar stays in sync when init() is called.
+    if (Capacitor.isNativePlatform()) {
+      await this.handleStatusBar(darkMode)
     }
 
     // If the appearance changed, update the stored appearance.
