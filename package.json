@@ -75,7 +75,7 @@
     "@aparajita/eslint-config-base": "^1.1.5",
     "@aparajita/prettier-config": "^1.0.0",
     "@aparajita/swiftly": "^1.0.4",
-    "@capacitor/cli": "^4.6.3",
+    "@capacitor/cli": "^5.0.0",
     "@commitlint/cli": "^17.4.3",
     "@commitlint/config-conventional": "^17.4.3",
     "@ionic/swiftlint-config": "^1.1.2",
@@ -101,9 +101,9 @@
     "typescript": "~4.9.5"
   },
   "dependencies": {
-    "@capacitor/android": "^4.6.3",
-    "@capacitor/core": "^4.6.3",
-    "@capacitor/ios": "^4.6.3",
-    "@capacitor/status-bar": "^4.1.1"
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/core": "^5.0.0",
+    "@capacitor/ios": "^5.0.0",
+    "@capacitor/status-bar": "^5.0.0"
   }
 }
