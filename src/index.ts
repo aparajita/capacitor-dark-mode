@@ -1,8 +1,5 @@
 import { registerPlugin } from '@capacitor/core'
 import type { DarkModePlugin } from './definitions'
-import info from './info.json'
-
-console.log(`loaded ${info.name} v${info.version}`)
 
 const proxy = registerPlugin<DarkModePlugin>('DarkModeNative', {
   web: async () => import('./web').then((module) => new module.DarkModeWeb()),
