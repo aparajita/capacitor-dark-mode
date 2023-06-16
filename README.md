@@ -2,7 +2,7 @@
 
 # capacitor-dark-mode&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode)
 
-This [Capacitor 4](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
+This [Capacitor 5](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
 
 ### ❗️Breaking changes
 
@@ -13,7 +13,7 @@ If you are currently using v2.x, please note:
 
 ## Motivation
 
-On the web and iOS, dark mode works easily with Ionic because browsers and WKWebView correctly handle the `prefers-color-scheme` CSS property. On Android, on the other hand, `prefers-color-scheme` is [well and truly broken](https://developer.android.com/guide/webapps/dark-theme). I have never seen it work reliably in an Ionic app, even with Capacitor 4 and the Android DayNight theme.
+On the web and iOS, dark mode works easily with Ionic because browsers and WKWebView correctly handle the `prefers-color-scheme` CSS property. On Android, on the other hand, `prefers-color-scheme` is [well and truly broken](https://developer.android.com/guide/webapps/dark-theme). I have never seen it work reliably in an Ionic app, even with Capacitor 5 and the Android DayNight theme.
 
 With this plugin, you can easily enable and control dark mode in your app across **all** platforms, guaranteed! This means that on Android versions prior to 10 (API 29), which is the first version to support system dark mode, you can allow the user to toggle dark mode.
 
@@ -137,7 +137,7 @@ router
     DarkMode.init({
       cssClass: 'dark-mode',
       getter: getAppearancePref,
-      setter: setAppearancePref
+      setter: setAppearancePref,
     })
       .then(() => {
         app.mount('#app')
