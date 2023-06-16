@@ -2,7 +2,7 @@ import DarkModeBase from './base'
 import type {
   DarkModeListenerData,
   DarkModePlugin,
-  IsDarkModeResult
+  IsDarkModeResult,
 } from './definitions'
 
 // eslint-disable-next-line import/prefer-default-export

@@ -6,7 +6,7 @@ const proxy = registerPlugin<DarkModePlugin>('DarkModeNative', {
   ios: async () =>
     import('./native').then((module) => new module.DarkModeNative(proxy)),
   android: async () =>
-    import('./native').then((module) => new module.DarkModeNative(proxy))
+    import('./native').then((module) => new module.DarkModeNative(proxy)),
 })
 
 export * from './definitions'

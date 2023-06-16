@@ -7,13 +7,13 @@ import { DarkModeAppearance } from './definitions'
 const kAppearanceToStyleMap = {
   [DarkModeAppearance.dark]: Style.Dark,
   [DarkModeAppearance.light]: Style.Light,
-  [DarkModeAppearance.system]: Style.Default
+  [DarkModeAppearance.system]: Style.Default,
 } as const
 
 const kStyleToAppearanceMap = {
   [Style.Dark]: DarkModeAppearance.dark,
   [Style.Light]: DarkModeAppearance.light,
-  [Style.Default]: DarkModeAppearance.system
+  [Style.Default]: DarkModeAppearance.system,
 }
 
 /**

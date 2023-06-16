@@ -11,7 +11,7 @@ import type {
   DarkModeSetter,
   DarkModeSyncStatusBar,
   IsDarkModeResult,
-  StatusBarStyleGetter
+  StatusBarStyleGetter,
 } from './definitions'
 import { DarkModeAppearance } from './definitions'
 import { isDarkColor, isValidHexColor, normalizeHexColor } from './utils'
@@ -56,7 +56,7 @@ export default abstract class DarkModeBase
     setter,
     syncStatusBar,
     statusBarStyleGetter,
-    disableTransitions
+    disableTransitions,
   }: DarkModeOptions = {}): Promise<void> {
     if (cssClass) {
       // Remove the old class if it exists
@@ -104,7 +104,7 @@ export default abstract class DarkModeBase
   ): Promise<DarkModeListenerHandle> {
     this.appearanceListeners.add(listener)
     return Promise.resolve({
-      remove: () => this.appearanceListeners.delete(listener)
+      remove: () => this.appearanceListeners.delete(listener),
     })
   }
 

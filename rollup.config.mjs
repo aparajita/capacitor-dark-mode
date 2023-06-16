@@ -11,17 +11,17 @@ export default defineConfig({
       name: 'capacitorDarkMode',
       globals: {
         '@capacitor/core': 'capacitorExports',
-        '@capacitor/status-bar': 'statusBar'
+        '@capacitor/status-bar': 'statusBar',
       },
       sourcemap: !!process.env.SOURCE_MAP,
-      inlineDynamicImports: true
+      inlineDynamicImports: true,
     },
     {
       file: 'dist/plugin.cjs.js',
       format: 'cjs',
       sourcemap: !!process.env.SOURCE_MAP,
-      inlineDynamicImports: true
-    }
+      inlineDynamicImports: true,
+    },
   ],
-  external: ['@capacitor/core', '@capacitor/status-bar']
+  external: ['@capacitor/core', '@capacitor/status-bar'],
 })

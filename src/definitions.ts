@@ -9,7 +9,7 @@ import type { Style } from '@capacitor/status-bar'
 export enum DarkModeAppearance {
   dark = 'dark',
   light = 'light',
-  system = 'system'
+  system = 'system',
 }
 
 /**
