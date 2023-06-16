@@ -2,6 +2,23 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [4.0.0](https://github.com/aparajita/capacitor-dark-mode/compare/v3.3.3...v4.0.0) (2023-06-16)
+
+
+### ⚠ BREAKING CHANGES
+
+* The plugin now requires Capacitor 5.
+
+### Features
+
+* upgrade to Capacitor 5 ([5f75cf0](https://github.com/aparajita/capacitor-dark-mode/commit/5f75cf0b95749118490e2ad2f983fcf0529c4e3a))
+
+
+### Maintenance
+
+* don’t log name and version at startup ([5594ce1](https://github.com/aparajita/capacitor-dark-mode/commit/5594ce13663ed8f4a09e4ba6de6b7d46a379f1f0))
+* update dev environment ([1822ed6](https://github.com/aparajita/capacitor-dark-mode/commit/1822ed66bf78336d444346d20dfe99d664aa7d5a))
+
 ## [3.3.3](https://github.com/aparajita/capacitor-dark-mode/compare/v3.3.2...v3.3.3) (2023-03-28)
 
 
