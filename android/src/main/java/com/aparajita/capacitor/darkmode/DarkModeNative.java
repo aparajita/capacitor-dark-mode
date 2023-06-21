@@ -1,7 +1,6 @@
 package com.aparajita.capacitor.darkmode;
 
 import android.content.res.Configuration;
-
 import com.getcapacitor.*;
 import com.getcapacitor.annotation.CapacitorPlugin;
 
