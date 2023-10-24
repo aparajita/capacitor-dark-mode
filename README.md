@@ -188,9 +188,13 @@ For example, you could use `isDarkColor()` (which is exported by the plugin) wit
 ```typescript
 import { Style } from '@capacitor/status-bar'
 
-const statusBarStyleGetter = (style: Style, color: string) => {
-  const isDark = isDarkColor(color, 0.4)
-  return isDark ? Style.Dark : Style.Light
+const statusBarStyleGetter = (style?: Style, color?: string) => {
+  if (color) {
+    const isDark = isDarkColor(color, 0.4)
+    return isDark ? Style.Dark : Style.Light
+  }
+
+  return style
 }
 ```
 
