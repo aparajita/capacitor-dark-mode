@@ -198,6 +198,8 @@ const statusBarStyleGetter = (style?: Style, color?: string) => {
 }
 ```
 
+> 👉🏽 **Note:** The getter is also called when `syncStatusBar` is `'textOnly'`.
+
 ## Usage
 
 I could spend a lot of time explaining detailed usage, but perhaps the best explanation is a full example that uses the entire plugin API and shows how to handle user dark mode preference changes. Check out the demo app [here](https://github.com/aparajita/capacitor-dark-mode-demo). You will especially want to look at [`prefs.ts`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/prefs.ts) and [`DarkModeDemo.vue`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/components/DarkModeDemo.vue).
