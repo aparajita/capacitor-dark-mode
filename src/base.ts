@@ -191,7 +191,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
   }
 
   private getBackgroundColor(): string {
-    // Try to retrieve the background color variable value from <ion-content>
+    // Try to retrieve the background color variable value from <ion-content>.
     const content = document.querySelector('ion-content')
 
     if (content) {
@@ -216,29 +216,36 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     // to match light/dark mode. On Android we only do so if the user
     // has explicitly requested it.
     let setStatusBarStyle = Capacitor.getPlatform() === 'ios'
+
+    // By default the status bar style is the same as the appearance.
     let statusBarStyle = darkMode ? Style.Dark : Style.Light
+
+    // By default we will not change the background color of the status bar.
     let color = ''
 
     if (this.syncStatusBar && Capacitor.getPlatform() === 'android') {
+      // Assume the style will change when the appearance changes.
       setStatusBarStyle = true
 
+      // If the sync mode is not 'textOnly', try to get the background color from <ion-content>.
       if (this.syncStatusBar !== 'textOnly') {
         color = this.getBackgroundColor()
+      }
 
-        if (color) {
-          if (this.statusBarStyleGetter) {
-            const style = await this.statusBarStyleGetter(statusBarStyle, color)
+      if (this.statusBarStyleGetter) {
+        // If there is a style getter, use it to determine the status bar style.
+        const style = await this.statusBarStyleGetter(statusBarStyle, color)
 
-            if (style) {
-              statusBarStyle = style
-            }
-          } else {
-            statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
-          }
-        } else {
-          // We aren't changing the status bar color, no need to set the style
-          setStatusBarStyle = false
+        if (style) {
+          statusBarStyle = style
         }
+      } else if (color) {
+        // If there is no getter and we were able to get the <ion-content> color,
+        // set the status bar style based on the color.
+        statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
+      } else {
+        // If the background color did not change, no need to update the status bar.
+        setStatusBarStyle = false
       }
     }
 
@@ -252,6 +259,8 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
       actions.push(StatusBar.setStyle({ style: statusBarStyle }))
     }
 
-    await Promise.all(actions)
+    if (actions.length) {
+      await Promise.all(actions)
+    }
   }
 }
