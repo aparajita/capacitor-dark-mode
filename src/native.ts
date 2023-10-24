@@ -1,4 +1,4 @@
-import DarkModeBase from './base'
+import { DarkModeBase } from './base'
 import type {
   DarkModeListenerData,
   DarkModePlugin,

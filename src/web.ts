@@ -1,4 +1,4 @@
-import DarkModeBase from './base'
+import { DarkModeBase } from './base'
 import type { IsDarkModeResult } from './definitions'
 
 // eslint-disable-next-line import/prefer-default-export

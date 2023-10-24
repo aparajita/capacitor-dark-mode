@@ -18,10 +18,8 @@ import { isDarkColor, isValidHexColor, normalizeHexColor } from './utils'
 
 const kDefaultBackgroundVariable = '--background'
 
-export default abstract class DarkModeBase
-  extends WebPlugin
-  implements DarkModePlugin
-{
+// eslint-disable-next-line import/prefer-default-export
+export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
   private appearance = DarkModeAppearance.system
   private darkModeClass = 'dark'
   protected registeredListener = false
