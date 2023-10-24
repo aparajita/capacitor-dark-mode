@@ -43,7 +43,7 @@ export type DarkModeGetter = () =>
  * The type of your appearance setter function.
  */
 export type DarkModeSetter = (
-  appearance: DarkModeAppearance
+  appearance: DarkModeAppearance,
 ) => void | Promise<void>
 
 /**
@@ -51,7 +51,7 @@ export type DarkModeSetter = (
  */
 export type StatusBarStyleGetter = (
   style?: Style,
-  backgroundColor?: string
+  backgroundColor?: string,
 ) => StatusBarStyleGetterResult | Promise<StatusBarStyleGetterResult>
 
 /**
@@ -194,7 +194,7 @@ export interface DarkModePlugin extends WebPlugin {
   // private
   setNativeDarkModeListener: (
     options: Record<string, unknown>,
-    callback: DarkModeListener
+    callback: DarkModeListener,
   ) => Promise<string>
 
   /**
@@ -210,7 +210,7 @@ export interface DarkModePlugin extends WebPlugin {
    * and multiple listeners executing the same function.
    */
   addAppearanceListener: (
-    listener: DarkModeListener
+    listener: DarkModeListener,
   ) => Promise<DarkModeListenerHandle>
 
   /**

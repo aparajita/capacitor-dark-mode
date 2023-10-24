@@ -42,7 +42,7 @@ export default abstract class DarkModeBase
   // noinspection JSUnusedLocalSymbols
   async setNativeDarkModeListener(
     options: Record<string, unknown>,
-    callback: DarkModeListener
+    callback: DarkModeListener,
   ): Promise<string> {
     throw this.unimplemented('setNativeDarkModeListener is native only')
   }
@@ -100,7 +100,7 @@ export default abstract class DarkModeBase
   }
 
   async addAppearanceListener(
-    listener: DarkModeListener
+    listener: DarkModeListener,
   ): Promise<DarkModeListenerHandle> {
     this.appearanceListeners.add(listener)
     return Promise.resolve({
@@ -205,7 +205,7 @@ export default abstract class DarkModeBase
         return normalizeHexColor(color)
       } else {
         console.warn(
-          `Invalid hex color '${color}' for ${this.statusBarBackgroundVariable}`
+          `Invalid hex color '${color}' for ${this.statusBarBackgroundVariable}`,
         )
       }
     }
