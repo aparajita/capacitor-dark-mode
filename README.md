@@ -181,8 +181,7 @@ When `syncStatusBar` is `true` and a valid background color is set, by default t
 const statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
 ```
 
-If you want to use a different style, you can set `statusBarStyleGetter` to a function that returns the style to use. The function will be called with the current `Style` (based on the appearance setting, not the background color) and the status bar background color, and should return the `Style` that the status bar s
-hould be set to.
+If you want to use a different style, you can set `statusBarStyleGetter` to a function that returns the style to use. The function will be called with the current `Style` (based on the appearance setting, not the background color) and the status bar background color, and should return the `Style` that the status bar should be set to.
 
 For example, you could use `isDarkColor()` (which is exported by the plugin) with a different threshold:
 
