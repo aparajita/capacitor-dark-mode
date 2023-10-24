@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [4.0.1](https://github.com/aparajita/capacitor-dark-mode/compare/v4.0.0...v4.0.1) (2023-10-24)
+
+
+### Bug Fixes
+
+* style getter called in textOnly sync mode ([8c524eb](https://github.com/aparajita/capacitor-dark-mode/commit/8c524ebd1acac0182214ad42a527d65a1b2f8441))
+
+
+### Maintenance
+
+* prettier with new options ([eb0c676](https://github.com/aparajita/capacitor-dark-mode/commit/eb0c676c69ca0d39257cc47d6c4ffb97656617a9))
+* remove husky support ([1bee6a1](https://github.com/aparajita/capacitor-dark-mode/commit/1bee6a1e248072ecdc8f35db8f46145f91c1e9c6))
+* update deps ([622d1c8](https://github.com/aparajita/capacitor-dark-mode/commit/622d1c838c452236c50803005cdbd24ec9d8659b))
+* update deps, lint native code ([6b3c158](https://github.com/aparajita/capacitor-dark-mode/commit/6b3c158cbfc98c3e653ccb4af744a91c6016553e))
+* webstorm wants this locally now ([c31930e](https://github.com/aparajita/capacitor-dark-mode/commit/c31930e2de35fa2c2923e76fb4e86e654db4996a))
+
+
+### Docs
+
+* note change in behavior ([b6f26b9](https://github.com/aparajita/capacitor-dark-mode/commit/b6f26b920684b8cc1eca79a372f2c5e48d33c9ee))
+* parameters must be optional ([dc48772](https://github.com/aparajita/capacitor-dark-mode/commit/dc487720d5e104a6f4ccd92626082aef348cd10d))
+* typo ([2b6f75c](https://github.com/aparajita/capacitor-dark-mode/commit/2b6f75c1fd5f637e5a2eaf9c61a5793a4c620865))
+
+
+### Refactoring
+
+* export named class ([4d773c6](https://github.com/aparajita/capacitor-dark-mode/commit/4d773c69cecc4e947844655e978ff1ad153d9bd3))
+
 ## [4.0.0](https://github.com/aparajita/capacitor-dark-mode/compare/v3.3.3...v4.0.0) (2023-06-16)
 
 
