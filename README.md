@@ -2,14 +2,17 @@
 
 # capacitor-dark-mode&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode)
 
-This [Capacitor 5](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
+This [Capacitor 6](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
 
 ### ❗️Breaking changes
 
-If you are currently using v2.x, please note:
+In order to conform to Ionic 8’s built in dark mode support when importing `@ionic/vue/css/palettes/dark.class.css`, two changes have been made:
 
-- Because the plugin is now lazy loaded, the suggested way of initializing the plugin has changed.
-- The result type of `isDarkMode` has changed.
+- When running on Ionic 8+, the default dark mode class is now `.ion-palette-dark`. If you were using the default `.dark` class, replace all usages of `.dark` in your CSS with `.ion-palette-dark`.
+
+- The dark mode class is now applied to the `html` element instead of the `body`.
+
+In order to conform with the Capacitor 6 listener interface, [`addAppearanceListener`](#addappearancelistener) now returns only a Promise and must be awaited.
 
 ## Motivation
 
@@ -48,30 +51,30 @@ pnpm add @aparajita/capacitor-dark-mode
 
 Once the plugin is installed, you need to:
 
-- Provide a dark mode in your CSS.
+- Provide a dark mode in your CSS if using Ionic < 8, or `import '@ionic/vue/css/palettes/dark.class.css'` in Ionic 8+.
 - Initialize the plugin.
 
 ### Dark mode CSS
 
-This plugin adds or removes a CSS class to the `body` element when necessary. By default, the class is `dark`, but you can configure it to be whatever you want.
+This plugin adds or removes a CSS class to the `html` element when necessary. By default, the class is `.dark` on Ionic < 8 and `.ion-palette-dark` on Ionic 8+, but you can configure it to be whatever you want.
 
-> 👉🏽 **Note:** If you are using Tailwind’s [dark mode support](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually), set `darkMode: 'class'` in your Tailwind config file. Although the examples they give put the `dark` class on the `html` element, Tailwind’s dark mode does work with the `dark` class on the `body` element.
+> 👉🏽 **Note:** If you are using Tailwind’s [dark mode support](https://tailwindcss.com/docs/dark-mode#toggling-dark-mode-manually), set `darkMode: 'class'` in your Tailwind config file.
 
 It is up to you to configure your CSS to actually implement dark mode when that class is present. A good place to start is the standard [Ionic dark mode](https://ionicframework.com/docs/theming/dark-mode#ionic-dark-theme), which relies on the CSS variables that control Ionic component appearance.
 
-If you have an existing CSS dark theme which relies on `prefers-color-scheme`, you should remove all `@media (prefers-color-scheme: dark)` rules and instead use `body.dark` as the dark mode selector. There is NO need to duplicate the dark mode in both a `@media (prefers-color-scheme: dark)` block and a `body.dark` block. That’s one of the advantages of using this plugin!
+If you have an existing CSS dark theme which relies on `prefers-color-scheme`, you should remove all `@media (prefers-color-scheme: dark)` rules and instead use `html.dark` (or simply `.dark`) as the dark mode selector. There is NO need to duplicate the dark mode in both a `@media (prefers-color-scheme: dark)` block and a `html.dark` block. That’s one of the advantages of using this plugin!
 
 ```css
 /* Remove all prefers-color-scheme selectors! */
 @media (prefers-color-scheme: dark) {
-  body {
+  html {
     --ion-color-primary: #428cff;
     /* ... */
   }
 }
 
 /* Replace with this */
-body.dark {
+html.dark {
   --ion-color-primary: #428cff;
   /* ... */
 }
@@ -79,9 +82,9 @@ body.dark {
 
 ### Plugin configuration
 
-If you are using `dark` as the dark mode CSS class and you don’t allow the user to manually set light or dark mode — and thus don’t need to store a preference — you are all set! The plugin does all of the hard work for you.
+If you are using the default dark mode CSS class and you don’t allow the user to manually set light or dark mode — and thus don’t need to store a preference — you are all set! The plugin does all of the hard work for you.
 
-If you are using a dark mode CSS class other than `dark`, you need to configure the plugin. You will want to do this just before the app is mounted to avoid any visual glitches. For example, if your app uses a dark mode CSS class of `dark-mode`, you would configure the plugin like this in a Vue-based Ionic app:
+If you are using a dark mode CSS class other than the default, you need to configure the plugin. You will want to do this just before the app is mounted to avoid any visual glitches. For example, if your app uses a dark mode CSS class of `.dark-mode`, you would configure the plugin like this in a Vue-based Ionic app:
 
 **main.ts**
 
@@ -103,7 +106,7 @@ router
 
 Use the equivalent in a React or Angular-based Ionic app.
 
-> 👉🏽 **Note:** Do not initialize the plugin in the `<head>` of `index.html`, as was recommended in v2.x.
+> 👉🏽 **Note:** Using a custom dark mode class will not work on Ionic 8+ if you are importing `@ionic/vue/css/palettes/dark.class.css` You must use the default (`.ion-palette-dark`) in that case.
 
 #### Custom preference storage
 
@@ -316,15 +319,15 @@ Adds or removes the dark mode class on the html element depending on the dark mo
 
 The options passed to `configure`.
 
-| Prop                        | Type                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                         |
-| :-------------------------- | :--------------------------------------------------------- | :-------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- |
-| cssClass                    | string                                                     | The CSS class name to use to toggle dark mode.                                                                                                                                                                                                                                                                                                                                                                                                                                                      |
-| getter                      | <a href="#darkmodegetter">DarkModeGetter</a>               | If set, this function will be called to retrieve the current dark mode state instead of `isDarkMode`. For example, you might want to let the user set dark/light mode manually and store that preference somewhere. If the function wants to signal that no value can be retrieved, it should return null or undefined, in which case `isDarkMode` will be used.<br><br>If you are not providing any storage of the dark mode state, don't pass this in the options.                                |
-| setter                      | <a href="#darkmodesetter">DarkModeSetter</a>               | If set, this function will be called to set the current dark mode state when `update` is called. For example, you might want to let the user set dark/light mode manually and store that preference somewhere, such as localStorage.                                                                                                                                                                                                                                                                |
-| disableTransitions          | boolean                                                    | If true, the plugin will automatically disable all transitions when dark mode is toggled. This is to prevent different elements from switching between light and dark mode at different rates. &lt;ion-item&gt;, for example, by default has a transition on all of its properties.<br><br>Set this to false if you want to handle transitions yourself.                                                                                                                                            |
-| syncStatusBar               | <a href="#darkmodesyncstatusbar">DarkModeSyncStatusBar</a> | Android only<br><br>If `statusBarStyleGetter` is set, this option is unused.<br><br>If true, on Android the status bar background and content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>If 'textOnly', on Android only the status bar content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>On iOS this option is not used, the status bar background is synced with dark mode by the system. |
-| statusBarBackgroundVariable | string                                                     | Android only<br><br>If set, this CSS variable will be used instead of '--background' to set the status bar background color.                                                                                                                                                                                                                                                                                                                                                                        |
-| statusBarStyleGetter        | <a href="#statusbarstylegetter">StatusBarStyleGetter</a>   | Android only<br><br>If set, and `syncStatusBar` is true, this function will be called to retrieve the current status bar style instead of basing it on the dark mode. If the function wants to signal that no value can be retrieved, it should return a falsey value, in which case the current appearance will be used to determine the style.                                                                                                                                                    |
+| Prop                        | Type                                                       | Description                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                   |
+| :-------------------------- | :--------------------------------------------------------- | :------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------ |
+| cssClass                    | string                                                     | The CSS class name to use to toggle dark mode.                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                |
+| getter                      | <a href="#darkmodegetter">DarkModeGetter</a>               | If set, this function will be called to retrieve the current dark mode state instead of `isDarkMode`. For example, you might want to let the user set dark/light mode manually and store that preference somewhere. If the function wants to signal that no value can be retrieved, it should return null or undefined, in which case `isDarkMode` will be used.<br><br>If you are not providing any storage of the dark mode state, don't pass this in the options.                                                                                          |
+| setter                      | <a href="#darkmodesetter">DarkModeSetter</a>               | If set, this function will be called to set the current dark mode state when `update` is called. For example, you might want to let the user set dark/light mode manually and store that preference somewhere, such as localStorage.                                                                                                                                                                                                                                                                                                                          |
+| disableTransitions          | boolean                                                    | If true, the plugin will automatically disable all transitions when dark mode is toggled. This is to prevent different elements from switching between light and dark mode at different rates. &lt;ion-item&gt;, for example, by default has a transition on all of its properties.<br><br>Set this to false if you want to handle transitions yourself.                                                                                                                                                                                                      |
+| syncStatusBar               | <a href="#darkmodesyncstatusbar">DarkModeSyncStatusBar</a> | Android only<br><br>If `statusBarStyleGetter` is set, this option is unused.<br><br>If true, on Android the status bar background and content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>.<br><br>If 'textOnly', on Android only the status bar content will be synced with the current <a href="#darkmodeappearance">`DarkModeAppearance`</a>: a light color when the appearance is dark and vice versa.<br><br>On iOS this option is not used, the status bar background is synced with dark mode by the system. |
+| statusBarBackgroundVariable | string                                                     | Android only<br><br>If set, this CSS variable will be used instead of '--background' to set the status bar background color.                                                                                                                                                                                                                                                                                                                                                                                                                                  |
+| statusBarStyleGetter        | <a href="#statusbarstylegetter">StatusBarStyleGetter</a>   | Android only<br><br>If set, and `syncStatusBar` is true, this function will be called to retrieve the current status bar style instead of basing it on the dark mode. If the function wants to signal that no value can be retrieved, it should return a falsey value, in which case the current appearance will be used to determine the style.                                                                                                                                                                                                              |
 
 #### IsDarkModeResult
 

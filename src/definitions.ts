@@ -135,7 +135,8 @@ export interface DarkModeOptions {
    * will be synced with the current `DarkModeAppearance`.
    *
    * If 'textOnly', on Android only the status bar content
-   * will be synced with the current `DarkModeAppearance`.
+   * will be synced with the current `DarkModeAppearance`:
+   * a light color when the appearance is dark and vice versa.
    *
    * On iOS this option is not used, the status bar background
    * is synced with dark mode by the system.

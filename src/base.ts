@@ -254,13 +254,13 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
           statusBarStyle = style
         }
       } else if (color) {
-        // If there is no getter and we were able to get the <ion-content> color,
-        // set the status bar style based on the color.
+        // If the status bar background color should be updated and there is no style getter
+        // and we were able to get the <ion-content> background color, set the status bar style
+        // based on the color.
         statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
       } else if (this.syncStatusBar !== 'textOnly') {
-        // If the status bar background color should be updated
-        // but the ion-content background color did not change,
-        // there is no need to update the status bar.
+        // If the status bar background color should be updated but we could not get the <ion-content>
+        // background color, there is no need to update the status bar style.
         setStatusBarStyle = false
       }
     }
