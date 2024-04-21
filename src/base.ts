@@ -275,7 +275,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
       actions.push(StatusBar.setStyle({ style: statusBarStyle }))
     }
 
-    if (actions.length) {
+    if (actions.length > 0) {
       await Promise.all(actions)
     }
   }
