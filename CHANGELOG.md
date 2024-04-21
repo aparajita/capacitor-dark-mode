@@ -2,6 +2,34 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.0.0](https://github.com/aparajita/capacitor-dark-mode/compare/v4.0.1...v5.0.0) (2024-04-21)
+
+
+### ⚠ BREAKING CHANGES
+
+* use Ionic 8 dark mode class
+
+### Features
+
+* use Ionic 8 dark mode class ([6d59546](https://github.com/aparajita/capacitor-dark-mode/commit/6d5954643684e84b2ba43b376cdb6ee73b985d39))
+
+
+### Bug Fixes
+
+* textOnly option was not working ([5fb625e](https://github.com/aparajita/capacitor-dark-mode/commit/5fb625e439a2c1d59abb1a2e62121eed8ab56044))
+
+
+### Maintenance
+
+* be explicit with comparison ([b50f5f8](https://github.com/aparajita/capacitor-dark-mode/commit/b50f5f8b534422ddda8c84d35978fb36432619a1))
+* prettier ([7c1f152](https://github.com/aparajita/capacitor-dark-mode/commit/7c1f152e93cbc730a8cfbec45a324a6f584f3ba9))
+* update deps ([ea78ef6](https://github.com/aparajita/capacitor-dark-mode/commit/ea78ef6a620c444f93f91a41ff20aa9b28cf8a73))
+
+
+### Docs
+
+* updates or Capacitor 6 and Ionic 8 ([85fe556](https://github.com/aparajita/capacitor-dark-mode/commit/85fe5563c45f2856ee4da6b398c6f75c81970140))
+
 ## [4.0.1](https://github.com/aparajita/capacitor-dark-mode/compare/v4.0.0...v4.0.1) (2023-10-24)
 
 
