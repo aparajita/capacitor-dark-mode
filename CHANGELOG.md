@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.0.1](https://github.com/aparajita/capacitor-dark-mode/compare/v5.0.0...v5.0.1) (2024-04-21)
+
+
+### Maintenance
+
+* update deps ([f8e5660](https://github.com/aparajita/capacitor-dark-mode/commit/f8e5660b5c7060a9b91c7bbecca87c2c2329c77b))
+* use capacitor migrate to make updates ([80ff853](https://github.com/aparajita/capacitor-dark-mode/commit/80ff8537347b2bb45dea74aea8045945bed73ef1))
+
 ## [5.0.0](https://github.com/aparajita/capacitor-dark-mode/compare/v4.0.1...v5.0.0) (2024-04-21)
 
 
