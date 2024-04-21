@@ -56,6 +56,16 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     statusBarStyleGetter,
     disableTransitions,
   }: DarkModeOptions = {}): Promise<void> {
+    // Ionic 8+ defines a fixed dark mode class name (`.ion-palette-dark`) for use with
+    // its dark mode CSS. We know we are using Ionic 8+ if `--ion-dynamic-font` is non-empty.
+    if (
+      getComputedStyle(document.documentElement).getPropertyValue(
+        '--ion-dynamic-font',
+      )
+    ) {
+      this.darkModeClass = 'ion-palette-dark'
+    }
+
     if (cssClass) {
       // Remove the old class if it exists
       document.documentElement.classList.remove(this.darkModeClass)
