@@ -149,7 +149,9 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
 
   async update(data?: DarkModeListenerData): Promise<DarkModeAppearance> {
     // Assume the appearance and dark mode did not change
-    const oldDarkMode = document.body.classList.contains(this.darkModeClass)
+    const oldDarkMode = document.documentElement.classList.contains(
+      this.darkModeClass,
+    )
     let darkMode: boolean
     let appearance = this.appearance
 
@@ -174,7 +176,9 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     // If the dark mode changed, update the body class and status bar.
     if (darkMode !== oldDarkMode) {
       this.disableTransitions()
-      document.body.classList[darkMode ? 'add' : 'remove'](this.darkModeClass)
+      document.documentElement.classList[darkMode ? 'add' : 'remove'](
+        this.darkModeClass,
+      )
       this.enableTransitions()
     }
 
