@@ -95,7 +95,7 @@
     "prettier": "^3.2.5",
     "prettier-plugin-java": "^2.6.0",
     "rimraf": "^5.0.5",
-    "rollup": "^4.15.0",
+    "rollup": "^4.16.0",
     "simple-git-hooks": "^2.11.1",
     "swiftlint": "^1.0.2",
     "typescript": "~5.4.5"
