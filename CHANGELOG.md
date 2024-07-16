@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [5.0.2](https://github.com/aparajita/capacitor-dark-mode/compare/v5.0.1...v5.0.2) (2024-07-16)
+
+
+### Maintenance
+
+* update android dependencies ([e073887](https://github.com/aparajita/capacitor-dark-mode/commit/e073887468014339ca000f30519860a7030dbc11))
+* update deps ([bd3eff9](https://github.com/aparajita/capacitor-dark-mode/commit/bd3eff9bdc6037b247c77ed0aca1377df71590ad))
+
 ## [5.0.1](https://github.com/aparajita/capacitor-dark-mode/compare/v5.0.0...v5.0.1) (2024-04-21)
 
 
