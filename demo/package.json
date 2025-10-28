@@ -1,6 +1,6 @@
 {
   "name": "@aparajita/capacitor-dark-mode-demo",
-  "version": "4.1.2",
+  "version": "6.0.0",
   "description": "An Ionic/Vue demo of the @aparajita/capacitor-dark-mode plugin",
   "private": true,
   "author": "Aparajita Fishman",
