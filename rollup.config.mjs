@@ -1,4 +1,3 @@
-// eslint-disable-next-line import/named
 import { defineConfig } from 'rollup'
 
 export default defineConfig({
@@ -13,13 +12,13 @@ export default defineConfig({
         '@capacitor/core': 'capacitorExports',
         '@capacitor/status-bar': 'statusBar',
       },
-      sourcemap: !!process.env.SOURCE_MAP,
+      sourcemap: Boolean(process.env.SOURCE_MAP),
       inlineDynamicImports: true,
     },
     {
       file: 'dist/plugin.cjs.js',
       format: 'cjs',
-      sourcemap: !!process.env.SOURCE_MAP,
+      sourcemap: Boolean(process.env.SOURCE_MAP),
       inlineDynamicImports: true,
     },
   ],

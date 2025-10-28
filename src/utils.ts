@@ -1,7 +1,7 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 // noinspection JSUnusedGlobalSymbols
 
 import { Style } from '@capacitor/status-bar'
+
 import { DarkModeAppearance } from './definitions'
 
 const kAppearanceToStyleMap = {
@@ -42,26 +42,26 @@ export function normalizeHexColor(color: string): string {
  */
 export function isDarkColor(color: string, threshold = 0.5): boolean {
   const hex = color.replace('#', '')
-  let r, g, b
+  let blue, green, red
 
   if (hex.length === 3) {
-    r = hex.substring(0, 1)
-    r += r
-    g = hex.substring(1, 2)
-    g += g
-    b = hex.substring(2, 3)
-    b += b
+    red = hex.slice(0, 1)
+    red += red
+    green = hex.slice(1, 2)
+    green += green
+    blue = hex.slice(2, 3)
+    blue += blue
   } else {
-    r = hex.substring(0, 2)
-    g = hex.substring(2, 4)
-    b = hex.substring(4, 6)
+    red = hex.slice(0, 2)
+    green = hex.slice(2, 4)
+    blue = hex.slice(4, 6)
   }
 
-  r = parseInt(r, 16)
-  g = parseInt(g, 16)
-  b = parseInt(b, 16)
+  red = Number.parseInt(red, 16)
+  green = Number.parseInt(green, 16)
+  blue = Number.parseInt(blue, 16)
 
-  const brightness = (r * 299 + g * 587 + b * 114) / 1000
+  const brightness = (red * 299 + green * 587 + blue * 114) / 1000
   return brightness < threshold * 255
 }
 

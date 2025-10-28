@@ -5,7 +5,6 @@ import type {
   IsDarkModeResult,
 } from './definitions'
 
-// eslint-disable-next-line import/prefer-default-export
 export class DarkModeNative extends DarkModeBase {
   constructor(capProxy: DarkModePlugin) {
     super()
@@ -20,17 +19,23 @@ export class DarkModeNative extends DarkModeBase {
       - A listener for dynamic appearance changes within the app.
       - A resume listener to check if the appearance has changed since the app was suspended.
     */
-    const onChange = (data: DarkModeListenerData): void => {
-      this.update(data).catch(console.error)
+    const onChange = async (data: DarkModeListenerData): Promise<void> => {
+      try {
+        await this.update(data)
+      } catch (error) {
+        console.error(error)
+      }
     }
 
+    // eslint-disable-next-line @typescript-eslint/no-misused-promises
     await this.setNativeDarkModeListener({}, onChange)
     this.registeredListener = true
   }
 
   // @native(promise)
+  // eslint-disable-next-line @typescript-eslint/class-methods-use-this,@typescript-eslint/require-await
   async isDarkMode(): Promise<IsDarkModeResult> {
     // Never called, but we have to satisfy TS
-    return Promise.resolve({ dark: false })
+    return { dark: false }
   }
 }

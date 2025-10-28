@@ -2,7 +2,7 @@
 
 # capacitor-dark-mode&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode)
 
-This [Capacitor 6](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
+This [Capacitor 7](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
 
 ### ❗️Breaking changes
 
@@ -205,7 +205,7 @@ const statusBarStyleGetter = (style?: Style, color?: string) => {
 
 ## Usage
 
-I could spend a lot of time explaining detailed usage, but perhaps the best explanation is a full example that uses the entire plugin API and shows how to handle user dark mode preference changes. Check out the demo app [here](https://github.com/aparajita/capacitor-dark-mode-demo). You will especially want to look at [`prefs.ts`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/prefs.ts) and [`DarkModeDemo.vue`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/components/DarkModeDemo.vue).
+I could spend a lot of time explaining detailed usage, but perhaps the best explanation is a full example that uses the entire plugin API and shows how to handle user dark mode preference changes. Check out the demo app [here](https://github.com/aparajita/capacitor-dark-mode/tree/main/demo). You will especially want to look at [`prefs.ts`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/prefs.ts) and [`dark-mode-demo.vue`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/components/dark-mode-demo.vue).
 
 ## API
 

@@ -1,6 +1,6 @@
-/* eslint-disable @typescript-eslint/no-magic-numbers */
 import { Capacitor, WebPlugin } from '@capacitor/core'
 import { StatusBar, Style } from '@capacitor/status-bar'
+
 import type {
   DarkModeGetter,
   DarkModeListener,
@@ -18,7 +18,6 @@ import { isDarkColor, isValidHexColor, normalizeHexColor } from './utils'
 
 const kDefaultBackgroundVariable = '--background'
 
-// eslint-disable-next-line import/prefer-default-export
 export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
   private appearance = DarkModeAppearance.system
   private darkModeClass = 'dark'
@@ -27,6 +26,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
   private getter?: DarkModeGetter
   private setter?: DarkModeSetter
   private statusBarStyleGetter?: StatusBarStyleGetter
+  private readonly platform = Capacitor.getPlatform()
   private syncStatusBar: DarkModeSyncStatusBar = true
   private statusBarBackgroundVariable = kDefaultBackgroundVariable
   private handleTransitions = true
@@ -35,17 +35,17 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
   protected abstract registerDarkModeListener(): Promise<void>
 
   // @native(callback)
-  /* eslint-disable @typescript-eslint/no-unused-vars,@typescript-eslint/require-await */
+  /* eslint-disable @typescript-eslint/require-await */
 
   // noinspection JSUnusedLocalSymbols
   async setNativeDarkModeListener(
-    options: Record<string, unknown>,
-    callback: DarkModeListener,
+    _options: Record<string, unknown>,
+    _callback: DarkModeListener,
   ): Promise<string> {
     throw this.unimplemented('setNativeDarkModeListener is native only')
   }
 
-  /* eslint-enable @typescript-eslint/no-unused-vars,@typescript-eslint/require-await */
+  /* eslint-enable @typescript-eslint/require-await */
 
   async init({
     cssClass,
@@ -107,13 +107,14 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     return this.init(options)
   }
 
+  // eslint-disable-next-line @typescript-eslint/require-await
   async addAppearanceListener(
     listener: DarkModeListener,
   ): Promise<DarkModeListenerHandle> {
     this.appearanceListeners.add(listener)
-    return Promise.resolve({
+    return {
       remove: () => this.appearanceListeners.delete(listener),
-    })
+    }
   }
 
   // @native(promise)
@@ -126,10 +127,10 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
 
     if (!this.disableTransitionsStyle) {
       this.disableTransitionsStyle = document.createElement('style')
-      this.disableTransitionsStyle.innerText = `* { transition: none !important; --transition: none !important; } ion-content::part(background) { transition: none !important; }`
+      this.disableTransitionsStyle.textContent = `* { transition: none !important; --transition: none !important; } ion-content::part(background) { transition: none !important; }`
     }
 
-    document.head.appendChild(this.disableTransitionsStyle)
+    document.head.append(this.disableTransitionsStyle)
   }
 
   private enableTransitions(): void {
@@ -141,7 +142,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
       const style = this.disableTransitionsStyle
       window.setTimeout(() => {
         if (document.head.contains(style)) {
-          document.head.removeChild(style)
+          style.remove()
         }
       }, 100)
     }
@@ -167,7 +168,12 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
 
     // If the appearance is system, use the current dark mode.
     if (appearance === DarkModeAppearance.system) {
-      darkMode = data ? data.dark : (await this.isDarkMode()).dark
+      if (data) {
+        darkMode = data.dark
+      } else {
+        const result = await this.isDarkMode()
+        darkMode = result.dark
+      }
     } else {
       // Otherwise, use the appearance to determine the dark mode.
       darkMode = appearance === DarkModeAppearance.dark
@@ -176,9 +182,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     // If the dark mode changed, update the body class and status bar.
     if (darkMode !== oldDarkMode) {
       this.disableTransitions()
-      document.documentElement.classList[darkMode ? 'add' : 'remove'](
-        this.darkModeClass,
-      )
+      document.documentElement.classList.toggle(this.darkModeClass, darkMode)
       this.enableTransitions()
     }
 
@@ -201,7 +205,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     }
 
     this.appearance = appearance
-    return Promise.resolve(this.appearance)
+    return this.appearance
   }
 
   private getBackgroundColor(): string {
@@ -215,49 +219,52 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
 
       if (isValidHexColor(color)) {
         return normalizeHexColor(color)
-      } else {
-        console.warn(
-          `Invalid hex color '${color}' for ${this.statusBarBackgroundVariable}`,
-        )
       }
+
+      console.warn(
+        `Invalid hex color '${color}' for ${this.statusBarBackgroundVariable}`,
+      )
     }
 
     return ''
   }
 
   private async handleStatusBar(darkMode: boolean): Promise<void> {
-    // On iOS we always need to update the status bar appearance
+    // On iOS we always need to update the status bar text/icon style
     // to match light/dark mode. On Android we only do so if the user
     // has explicitly requested it.
-    let setStatusBarStyle = Capacitor.getPlatform() === 'ios'
+    let setStatusBarStyle = this.platform === 'ios'
 
     // By default the status bar style is the same as the appearance.
     let statusBarStyle = darkMode ? Style.Dark : Style.Light
 
     // By default we will not change the background color of the status bar.
-    let color = ''
+    let backgroundColor = ''
 
-    if (this.syncStatusBar && Capacitor.getPlatform() === 'android') {
+    if (this.syncStatusBar && this.platform === 'android') {
       // Assume the style will change when the appearance changes.
       setStatusBarStyle = true
 
       // If the sync mode is not 'textOnly', try to get the background color from <ion-content>.
       if (this.syncStatusBar !== 'textOnly') {
-        color = this.getBackgroundColor()
+        backgroundColor = this.getBackgroundColor()
       }
 
       if (this.statusBarStyleGetter) {
         // If there is a style getter, use it to determine the status bar style.
-        const style = await this.statusBarStyleGetter(statusBarStyle, color)
+        const style = await this.statusBarStyleGetter(
+          statusBarStyle,
+          backgroundColor,
+        )
 
         if (style) {
           statusBarStyle = style
         }
-      } else if (color) {
+      } else if (backgroundColor) {
         // If the status bar background color should be updated and there is no style getter
         // and we were able to get the <ion-content> background color, set the status bar style
         // based on the color.
-        statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
+        statusBarStyle = isDarkColor(backgroundColor) ? Style.Dark : Style.Light
       } else if (this.syncStatusBar !== 'textOnly') {
         // If the status bar background color should be updated but we could not get the <ion-content>
         // background color, there is no need to update the status bar style.
@@ -265,10 +272,10 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
       }
     }
 
-    const actions: Array<Promise<void>> = []
+    const actions: Promise<void>[] = []
 
-    if (color) {
-      actions.push(StatusBar.setBackgroundColor({ color }))
+    if (backgroundColor) {
+      actions.push(StatusBar.setBackgroundColor({ color: backgroundColor }))
     }
 
     if (setStatusBarStyle) {

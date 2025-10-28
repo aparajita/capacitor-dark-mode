@@ -1,0 +1,7 @@
+{
+  "name": "capacitor-dark-mode-demo",
+  "integrations": {
+    "capacitor": {}
+  },
+  "type": "custom"
+}

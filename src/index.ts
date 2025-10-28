@@ -1,12 +1,20 @@
 import { registerPlugin } from '@capacitor/core'
+
 import type { DarkModePlugin } from './definitions'
 
 const proxy = registerPlugin<DarkModePlugin>('DarkModeNative', {
-  web: async () => import('./web').then((module) => new module.DarkModeWeb()),
-  ios: async () =>
-    import('./native').then((module) => new module.DarkModeNative(proxy)),
-  android: async () =>
-    import('./native').then((module) => new module.DarkModeNative(proxy)),
+  web: async () => {
+    const module = await import('./web')
+    return new module.DarkModeWeb()
+  },
+  ios: async () => {
+    const module = await import('./native')
+    return new module.DarkModeNative(proxy)
+  },
+  android: async () => {
+    const module = await import('./native')
+    return new module.DarkModeNative(proxy)
+  },
 })
 
 export * from './definitions'

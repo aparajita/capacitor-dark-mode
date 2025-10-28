@@ -1,0 +1,10 @@
+/*
+ * iOS Dark Theme customizations
+ */
+
+html.ios.ion-palette-dark ion-modal {
+  --ion-background-color: var(--ion-background-color-step-100);
+  --ion-toolbar-background: var(--ion-background-color-step-150);
+  --ion-toolbar-border-color: var(--ion-background-color-step-250);
+  --ion-item-background: var(--ion-background-color-step-150);
+}
