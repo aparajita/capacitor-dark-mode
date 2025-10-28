@@ -2,6 +2,17 @@
 
 All notable changes to this project will be documented in this file. See [commit-and-tag-version](https://github.com/absolute-version/commit-and-tag-version) for commit guidelines.
 
+## [6.0.0](https://github.com/aparajita/capacitor-dark-mode/compare/v5.0.2...v6.0.0) (2025-10-28)
+
+
+### ⚠ BREAKING CHANGES
+
+* upgrade to Capacitor 7, modernize
+
+### Features
+
+* upgrade to Capacitor 7, modernize ([5af60ca](https://github.com/aparajita/capacitor-dark-mode/commit/5af60cad523b965b386485fcc02703d30c5638b0))
+
 ## [5.0.2](https://github.com/aparajita/capacitor-dark-mode/compare/v5.0.1...v5.0.2) (2024-07-16)
 
 
