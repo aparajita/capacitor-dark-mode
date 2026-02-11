@@ -7,7 +7,7 @@
 
 import Capacitor
 
-// We use this view to get notified when the appearance changes
+/// We use this view to get notified when the appearance changes
 class TraitsView: UIView {
   var appearanceListener: ((UIUserInterfaceStyle) -> Void)?
   private var interfaceStyle = UIScreen.main.traitCollection.userInterfaceStyle

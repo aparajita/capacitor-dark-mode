@@ -17,7 +17,7 @@ public class DarkModeNative: CAPPlugin {
     }
   }
 
-  /*
+  /**
    * isDarkMode() plugin call
    */
   @objc public func isDarkMode(_ call: CAPPluginCall) {
@@ -30,7 +30,7 @@ public class DarkModeNative: CAPPlugin {
     call.resolve(["dark": dark])
   }
 
-  /*
+  /**
    * setNativeDarkModeListener() plugin call
    */
   @objc public func setNativeDarkModeListener(_ call: CAPPluginCall) {
@@ -39,7 +39,7 @@ public class DarkModeNative: CAPPlugin {
         call.resolve(["dark": interfaceStyle == .dark])
       }
 
-      if let listenerCall = self.listenerCall {
+      if let listenerCall = listenerCall {
         bridge?.releaseCall(listenerCall)
       }
 
