@@ -1,5 +1,5 @@
-import { DarkModeBase } from './base'
-import type { IsDarkModeResult } from './definitions'
+import { DarkModeBase } from './base.js'
+import type { IsDarkModeResult } from './definitions.js'
 
 /* eslint-disable @typescript-eslint/require-await */
 export class DarkModeWeb extends DarkModeBase {

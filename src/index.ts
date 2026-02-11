@@ -1,6 +1,6 @@
 import { registerPlugin } from '@capacitor/core'
 
-import type { DarkModePlugin } from './definitions'
+import type { DarkModePlugin } from './definitions.js'
 
 const proxy = registerPlugin<DarkModePlugin>('DarkModeNative', {
   web: async () => {
@@ -17,6 +17,6 @@ const proxy = registerPlugin<DarkModePlugin>('DarkModeNative', {
   },
 })
 
-export * from './definitions'
-export * from './utils'
+export * from './definitions.js'
+export * from './utils.js'
 export { proxy as DarkMode }

@@ -2,7 +2,7 @@
 
 import { Style } from '@capacitor/status-bar'
 
-import { DarkModeAppearance } from './definitions'
+import { DarkModeAppearance } from './definitions.js'
 
 const kAppearanceToStyleMap = {
   [DarkModeAppearance.dark]: Style.Dark,

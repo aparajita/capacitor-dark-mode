@@ -1,10 +1,11 @@
-import { DarkModeBase } from './base'
+import { DarkModeBase } from './base.js'
 import type {
   DarkModeListenerData,
   DarkModePlugin,
   IsDarkModeResult,
-} from './definitions'
+} from './definitions.js'
 
+/* eslint-disable @typescript-eslint/require-await */
 export class DarkModeNative extends DarkModeBase {
   constructor(capProxy: DarkModePlugin) {
     super()
@@ -33,9 +34,11 @@ export class DarkModeNative extends DarkModeBase {
   }
 
   // @native(promise)
-  // eslint-disable-next-line @typescript-eslint/class-methods-use-this,@typescript-eslint/require-await
+  // oxlint-disable-next-line class-methods-use-this
   async isDarkMode(): Promise<IsDarkModeResult> {
     // Never called, but we have to satisfy TS
     return { dark: false }
   }
 }
+
+/* eslint-enable @typescript-eslint/require-await */

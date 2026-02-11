@@ -12,9 +12,9 @@ import type {
   DarkModeSyncStatusBar,
   IsDarkModeResult,
   StatusBarStyleGetter,
-} from './definitions'
-import { DarkModeAppearance } from './definitions'
-import { isDarkColor, isValidHexColor, normalizeHexColor } from './utils'
+} from './definitions.js'
+import { DarkModeAppearance } from './definitions.js'
+import { isDarkColor, isValidHexColor, normalizeHexColor } from './utils.js'
 
 const kDefaultBackgroundVariable = '--background'
 
