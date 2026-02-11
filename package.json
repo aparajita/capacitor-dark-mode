@@ -62,7 +62,7 @@
     },
     "bumpFiles": [
       "package.json",
-      "demo/package.json",
+      "demo-pods/package.json",
       {
         "filename": "android/build.gradle",
         "updater": "scripts/gradle-updater.mjs"

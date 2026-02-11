@@ -1,5 +1,5 @@
 PODS:
-  - AparajitaCapacitorDarkMode (5.0.2):
+  - AparajitaCapacitorDarkMode (6.0.0):
     - Capacitor
   - Capacitor (7.4.4):
     - CapacitorCordova
@@ -44,7 +44,7 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/.pnpm/@capacitor+status-bar@7.0.3_@capacitor+core@7.4.4/node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
-  AparajitaCapacitorDarkMode: 49ebd9f1fe5fea7b84fd1814e552bdec0cf367a7
+  AparajitaCapacitorDarkMode: bc7978395b0c347b1e3263731e72ee75d3d418c3
   Capacitor: 358dd1c3fdd71d969547b17e159fd8a7736cb45f
   CapacitorApp: 26587c2ce485d88ddb39adb21cac64f8e481afe3
   CapacitorCordova: bf648a636f3c153f652d312ae145fb508b6ffced
