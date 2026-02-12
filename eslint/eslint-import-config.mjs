@@ -16,7 +16,12 @@ const configs = [
       'import-x/resolver': {
         typescript: {
           alwaysTryTypes: true,
-          project: ['tsconfig.json', 'demo-pods/tsconfig.json'],
+          project: [
+            'tsconfig.json',
+            'demo-pods/tsconfig.json',
+            'demo-shared/tsconfig.json',
+            'demo-spm/tsconfig.json',
+          ],
         },
         node: true,
       },
@@ -62,7 +67,7 @@ const configs = [
         },
       ],
       'import-x/order': [
-        'error',
+        'off',
         {
           groups: [
             'builtin',
@@ -72,13 +77,6 @@ const configs = [
             'sibling',
             'index',
             'object',
-          ],
-          pathGroups: [
-            {
-              pattern: '@ws/**',
-              group: 'internal',
-              position: 'before',
-            },
           ],
           pathGroupsExcludedImportTypes: ['builtin'],
           distinctGroup: true,

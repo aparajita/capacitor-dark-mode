@@ -1,3 +1,1 @@
-module.exports = {
-  ...require('@aparajita/prettier-config'),
-}
+module.exports = require('../demo-shared/prettier.config.js')

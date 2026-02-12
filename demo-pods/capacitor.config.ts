@@ -1,25 +1,8 @@
-// / <reference types="@capacitor/splash-screen" />
-// / <reference types="@capacitor/status-bar" />
+import baseConfig from 'demo-shared/capacitor.config'
 
-import type { CapacitorConfig } from '@capacitor/cli'
-import { KeyboardResize } from '@capacitor/keyboard'
-
-const config: CapacitorConfig = {
-  appId: 'com.aparajita.capacitor.darkmodedemo',
-  appName: 'Dark Mode',
-  loggingBehavior: 'debug',
-  server: {
-    androidScheme: 'http',
-  },
-  webDir: 'dist',
-  plugins: {
-    Keyboard: {
-      resize: KeyboardResize.None,
-    },
-    SplashScreen: {
-      launchAutoHide: false,
-    },
-  },
+const config = {
+  ...baseConfig,
+  webDir: '../demo-shared/dist',
 }
 
 export default config

@@ -11,6 +11,9 @@ Pods
 Build
 xcuserdata
 
+# SPM
+.build
+
 # macOS files
 .DS_Store
 

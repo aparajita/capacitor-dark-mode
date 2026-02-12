@@ -41,6 +41,10 @@ ANDROID_SYNC=(
   android/build.gradle
   android/gradle.properties
   android/variables.gradle
+  android/gradle/wrapper/gradle-wrapper.properties
+  android/gradle/wrapper/gradle-wrapper.jar
+  android/gradlew
+  android/gradlew.bat
 )
 
 SYNC_PATHS=("${IOS_SYNC[@]}" "${ANDROID_SYNC[@]}")

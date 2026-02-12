@@ -1,10 +1,10 @@
-<div class="markdown-body">
-
 # capacitor-dark-mode&nbsp;&nbsp;[![npm version](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode.svg)](https://badge.fury.io/js/@aparajita%2Fcapacitor-dark-mode)
 
-This [Capacitor 7](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
+This [Capacitor 8](https://capacitorjs.com) plugin is a complete dark mode solution for Ionic web, iOS and Android.
 
 ### ❗️Breaking changes
+
+This version requires Capacitor 8.
 
 In order to conform to Ionic 8’s built in dark mode support when importing `@ionic/vue/css/palettes/dark.class.css`, two changes have been made:
 
@@ -205,7 +205,7 @@ const statusBarStyleGetter = (style?: Style, color?: string) => {
 
 ## Usage
 
-I could spend a lot of time explaining detailed usage, but perhaps the best explanation is a full example that uses the entire plugin API and shows how to handle user dark mode preference changes. Check out the demo app [here](https://github.com/aparajita/capacitor-dark-mode/tree/main/demo). You will especially want to look at [`prefs.ts`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/prefs.ts) and [`dark-mode-demo.vue`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/components/dark-mode-demo.vue).
+I could spend a lot of time explaining detailed usage, but perhaps the best explanation is a full example that uses the entire plugin API and shows how to handle user dark mode preference changes. Check out the demo app [here](https://github.com/aparajita/capacitor-dark-mode/tree/main/demo-pods). You will especially want to look at [`prefs.ts`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/prefs.ts) and [`dark-mode-demo.vue`](https://github.com/aparajita/capacitor-dark-mode-demo/blob/main/src/components/dark-mode-demo.vue).
 
 ## API
 
@@ -424,5 +424,3 @@ The type of your appearance listener callback.
 | Default | "DEFAULT" | The style is based on the device appearance. If the device is using Dark mode, the statusbar text will be light. If the device is using Light mode, the statusbar text will be dark. On Android the default will be the one the app was launched with. |
 
 </docgen-api>
-
-</div>

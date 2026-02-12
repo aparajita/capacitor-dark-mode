@@ -4,25 +4,30 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+patchedDependencies:
+  '@ionic/cli@7.2.1':
+    hash: e977d5347237f91c158715446b2ddaad9f3424ab61416bcd6bd5c49b6a5f8b53
+    path: patches/@ionic__cli.patch
+
 importers:
 
   .:
     dependencies:
       '@capacitor/android':
         specifier: '>=8.0.0'
-        version: 8.0.2(@capacitor/core@8.0.2)
+        version: 8.1.0(@capacitor/core@8.1.0)
       '@capacitor/app':
         specifier: '>=8.0.0'
-        version: 8.0.0(@capacitor/core@8.0.2)
+        version: 8.0.0(@capacitor/core@8.1.0)
       '@capacitor/core':
         specifier: '>=8.0.0'
-        version: 8.0.2
+        version: 8.1.0
       '@capacitor/ios':
         specifier: '>=8.0.0'
-        version: 8.0.2(@capacitor/core@8.0.2)
+        version: 8.1.0(@capacitor/core@8.1.0)
       '@capacitor/status-bar':
         specifier: '>=8.0.0'
-        version: 8.0.0(@capacitor/core@8.0.2)
+        version: 8.0.0(@capacitor/core@8.1.0)
     devDependencies:
       '@aparajita/prettier-config':
         specifier: ^2.0.0
@@ -31,8 +36,8 @@ importers:
         specifier: ^2.0.0
         version: 2.0.0(swiftlint@2.0.0(typescript@5.9.3))
       '@capacitor/cli':
-        specifier: ^8.0.2
-        version: 8.0.2
+        specifier: ^8.1.0
+        version: 8.1.0
       '@commitlint/cli':
         specifier: ^20.4.1
         version: 20.4.1(@types/node@25.2.3)(typescript@5.9.3)
@@ -48,6 +53,9 @@ importers:
       '@eslint/js':
         specifier: ^9.39.2
         version: 9.39.2
+      '@ionic/cli':
+        specifier: ^7.2.1
+        version: 7.2.1(patch_hash=e977d5347237f91c158715446b2ddaad9f3424ab61416bcd6bd5c49b6a5f8b53)
       '@ionic/swiftlint-config':
         specifier: ^2.0.0
         version: 2.0.0
@@ -73,8 +81,8 @@ importers:
         specifier: ^0.0.5
         version: 0.0.5(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-unicorn:
-        specifier: ^62.0.0
-        version: 62.0.0(eslint@9.39.2(jiti@2.6.1))
+        specifier: ^63.0.0
+        version: 63.0.0(eslint@9.39.2(jiti@2.6.1))
       eslint-plugin-vue:
         specifier: ^10.7.0
         version: 10.7.0(@stylistic/eslint-plugin@2.11.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(@typescript-eslint/parser@8.55.0(eslint@9.39.2(jiti@2.6.1))(typescript@5.9.3))(eslint@9.39.2(jiti@2.6.1))(vue-eslint-parser@10.2.0(eslint@9.39.2(jiti@2.6.1)))
@@ -141,6 +149,49 @@ importers:
       '@capacitor/status-bar':
         specifier: ^8.0.0
         version: 8.0.0(@capacitor/core@8.1.0)
+      '@ionic/vue':
+        specifier: ^8.7.17
+        version: 8.7.17(@stencil/core@4.42.1)(vue-router@4.6.4(vue@3.5.28(typescript@5.9.3)))(vue@3.5.28(typescript@5.9.3))
+      '@ionic/vue-router':
+        specifier: ^8.7.17
+        version: 8.7.17(@stencil/core@4.42.1)(vue-router@4.6.4(vue@3.5.28(typescript@5.9.3)))(vue@3.5.28(typescript@5.9.3))
+      demo-shared:
+        specifier: workspace:*
+        version: link:../demo-shared
+      vue:
+        specifier: ^3.5.28
+        version: 3.5.28(typescript@5.9.3)
+      vue-router:
+        specifier: ^4.6.4
+        version: 4.6.4(vue@3.5.28(typescript@5.9.3))
+    devDependencies:
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
+
+  demo-shared:
+    dependencies:
+      '@aparajita/capacitor-dark-mode':
+        specifier: workspace:*
+        version: link:..
+      '@capacitor/app':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/core':
+        specifier: ^8.1.0
+        version: 8.1.0
+      '@capacitor/haptics':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/keyboard':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/splash-screen':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/status-bar':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
       '@ionic/core':
         specifier: ^8.7.17
         version: 8.7.17
@@ -166,9 +217,6 @@ importers:
       '@capacitor/cli':
         specifier: ^8.1.0
         version: 8.1.0
-      '@ionic/cli':
-        specifier: ^7.2.1
-        version: 7.2.1
       '@types/node':
         specifier: ^25.2.3
         version: 25.2.3
@@ -184,9 +232,6 @@ importers:
       autoprefixer:
         specifier: ^10.4.24
         version: 10.4.24(postcss@8.5.6)
-      commit-and-tag-version:
-        specifier: ^12.6.1
-        version: 12.6.1
       postcss:
         specifier: ^8.5.6
         version: 8.5.6
@@ -202,6 +247,55 @@ importers:
       vite:
         specifier: ^7.3.1
         version: 7.3.1(@types/node@25.2.3)(jiti@1.21.7)(terser@5.46.0)(yaml@2.8.2)
+
+  demo-spm:
+    dependencies:
+      '@aparajita/capacitor-dark-mode':
+        specifier: workspace:*
+        version: link:..
+      '@capacitor/android':
+        specifier: ^8.1.0
+        version: 8.1.0(@capacitor/core@8.1.0)
+      '@capacitor/app':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/core':
+        specifier: ^8.1.0
+        version: 8.1.0
+      '@capacitor/haptics':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/ios':
+        specifier: ^8.1.0
+        version: 8.1.0(@capacitor/core@8.1.0)
+      '@capacitor/keyboard':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/splash-screen':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@capacitor/status-bar':
+        specifier: ^8.0.0
+        version: 8.0.0(@capacitor/core@8.1.0)
+      '@ionic/vue':
+        specifier: ^8.7.17
+        version: 8.7.17(@stencil/core@4.42.1)(vue-router@4.6.4(vue@3.5.28(typescript@5.9.3)))(vue@3.5.28(typescript@5.9.3))
+      '@ionic/vue-router':
+        specifier: ^8.7.17
+        version: 8.7.17(@stencil/core@4.42.1)(vue-router@4.6.4(vue@3.5.28(typescript@5.9.3)))(vue@3.5.28(typescript@5.9.3))
+      demo-shared:
+        specifier: workspace:*
+        version: link:../demo-shared
+      vue:
+        specifier: ^3.5.28
+        version: 3.5.28(typescript@5.9.3)
+      vue-router:
+        specifier: ^4.6.4
+        version: 4.6.4(vue@3.5.28(typescript@5.9.3))
+    devDependencies:
+      vite:
+        specifier: ^7.3.1
+        version: 7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2)
 
 packages:
 
@@ -249,11 +343,6 @@ packages:
     resolution: {integrity: sha512-LwdZHpScM4Qz8Xw2iKSzS+cfglZzJGvofQICy7W7v4caru4EaAmyUuO6BGrbyQ2mYV11W0U8j5mBhd14dd3B0A==}
     engines: {node: '>=6.9.0'}
 
-  '@capacitor/android@8.0.2':
-    resolution: {integrity: sha512-0D7j0YvzjnfCMKLvFkAbx8b3Vwx+QfHFG5NzoXpI9sAl3zWiLsfa+NX4x92Fy+k4MGjLSMAfLThCqILYGDDsgw==}
-    peerDependencies:
-      '@capacitor/core': ^8.0.0
-
   '@capacitor/android@8.1.0':
     resolution: {integrity: sha512-z0acTPxj5DCy/U2FU7w+GA93oC+wdyKnsOcRg5rutDmSYa8Do1tzYqApKgf+hnuTNPbtrCTHp0Zy1cLiK/4MEw==}
     peerDependencies:
@@ -264,18 +353,10 @@ packages:
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
 
-  '@capacitor/cli@8.0.2':
-    resolution: {integrity: sha512-/8qLYxhytMyUKTHK8i6YU+DMD3AuFiQgSuJCyMltcg9MN3W9En7zqQZSo/WN4eC7qif/oyZACzm7OkAZKani7g==}
-    engines: {node: '>=22.0.0'}
-    hasBin: true
-
   '@capacitor/cli@8.1.0':
     resolution: {integrity: sha512-JAzA/ckPgTCjZz6YumBLV2dNCFEVXAuR1oOKLD7AJ4LAI5pF5RtRZrf5FoaxvJVb0S4CouZT5cD+7NwsNJX/nw==}
     engines: {node: '>=22.0.0'}
     hasBin: true
-
-  '@capacitor/core@8.0.2':
-    resolution: {integrity: sha512-EXZfxkL6GFJS2cb7TIBR7RiHA5iz6ufDcl1VmUpI2pga3lJ5Ck2+iqbx7N+osL3XYem9ad4XCidJEMm64DX6UQ==}
 
   '@capacitor/core@8.1.0':
     resolution: {integrity: sha512-UfMBMWc1v7J+14AhH03QmeNwV3HZx3qnOWhpwnHfzALEwAwlV/itQOQqcasMQYhOHWL0tiymc5ByaLTn7KKQxw==}
@@ -284,11 +365,6 @@ packages:
     resolution: {integrity: sha512-DY1IUOjke1T4ITl7mFHQIKCaJJyHYAYRYHG9bVApU7PDOZiMVGMp48Yjzdqjya+wv/AHS5mDabSTUmhJ5uDvBA==}
     peerDependencies:
       '@capacitor/core': '>=8.0.0'
-
-  '@capacitor/ios@8.0.2':
-    resolution: {integrity: sha512-7EM7vBxXI3Ku49aYCJcS9su5Y3i6UmXpx7e0y+oQV9PzCnZ6l5B0ACJ+gXAU0bM3q7/f+kGBsOtXMid84rU6MQ==}
-    peerDependencies:
-      '@capacitor/core': ^8.0.0
 
   '@capacitor/ios@8.1.0':
     resolution: {integrity: sha512-wPaQ8ayL0UY+SxydZbrmfzPs8TryZVEB6hrL/XBnXxQtb6rpEmIy/3GIltPwM+/T4m/IuaSDZOToWK65ruC00g==}
@@ -2122,8 +2198,8 @@ packages:
     peerDependencies:
       eslint: '*'
 
-  eslint-plugin-unicorn@62.0.0:
-    resolution: {integrity: sha512-HIlIkGLkvf29YEiS/ImuDZQbP12gWyx5i3C6XrRxMvVdqMroCI9qoVYCoIl17ChN+U89pn9sVwLxhIWj5nEc7g==}
+  eslint-plugin-unicorn@63.0.0:
+    resolution: {integrity: sha512-Iqecl9118uQEXYh7adylgEmGfkn5es3/mlQTLLkd4pXkIk9CTGrAbeUux+YljSa2ohXCBmQQ0+Ej1kZaFgcfkA==}
     engines: {node: ^20.10.0 || >=21.0.0}
     peerDependencies:
       eslint: '>=9.38.0'
@@ -4185,43 +4261,13 @@ snapshots:
       '@babel/helper-string-parser': 7.27.1
       '@babel/helper-validator-identifier': 7.28.5
 
-  '@capacitor/android@8.0.2(@capacitor/core@8.0.2)':
-    dependencies:
-      '@capacitor/core': 8.0.2
-
   '@capacitor/android@8.1.0(@capacitor/core@8.1.0)':
     dependencies:
       '@capacitor/core': 8.1.0
 
-  '@capacitor/app@8.0.0(@capacitor/core@8.0.2)':
-    dependencies:
-      '@capacitor/core': 8.0.2
-
   '@capacitor/app@8.0.0(@capacitor/core@8.1.0)':
     dependencies:
       '@capacitor/core': 8.1.0
-
-  '@capacitor/cli@8.0.2':
-    dependencies:
-      '@ionic/cli-framework-output': 2.2.8
-      '@ionic/utils-subprocess': 3.0.1
-      '@ionic/utils-terminal': 2.3.5
-      commander: 12.1.0
-      debug: 4.4.3(supports-color@5.5.0)
-      env-paths: 2.2.1
-      fs-extra: 11.3.3
-      kleur: 4.1.5
-      native-run: 2.0.3
-      open: 8.4.2
-      plist: 3.1.0
-      prompts: 2.4.2
-      rimraf: 6.1.2
-      semver: 7.7.4
-      tar: 7.5.7
-      tslib: 2.8.1
-      xml2js: 0.6.2
-    transitivePeerDependencies:
-      - supports-color
 
   '@capacitor/cli@8.1.0':
     dependencies:
@@ -4245,10 +4291,6 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@capacitor/core@8.0.2':
-    dependencies:
-      tslib: 2.8.1
-
   '@capacitor/core@8.1.0':
     dependencies:
       tslib: 2.8.1
@@ -4256,10 +4298,6 @@ snapshots:
   '@capacitor/haptics@8.0.0(@capacitor/core@8.1.0)':
     dependencies:
       '@capacitor/core': 8.1.0
-
-  '@capacitor/ios@8.0.2(@capacitor/core@8.0.2)':
-    dependencies:
-      '@capacitor/core': 8.0.2
 
   '@capacitor/ios@8.1.0(@capacitor/core@8.1.0)':
     dependencies:
@@ -4272,10 +4310,6 @@ snapshots:
   '@capacitor/splash-screen@8.0.0(@capacitor/core@8.1.0)':
     dependencies:
       '@capacitor/core': 8.1.0
-
-  '@capacitor/status-bar@8.0.0(@capacitor/core@8.0.2)':
-    dependencies:
-      '@capacitor/core': 8.0.2
 
   '@capacitor/status-bar@8.0.0(@capacitor/core@8.1.0)':
     dependencies:
@@ -4598,7 +4632,7 @@ snapshots:
     transitivePeerDependencies:
       - supports-color
 
-  '@ionic/cli@7.2.1':
+  '@ionic/cli@7.2.1(patch_hash=e977d5347237f91c158715446b2ddaad9f3424ab61416bcd6bd5c49b6a5f8b53)':
     dependencies:
       '@ionic/cli-framework': 6.0.1
       '@ionic/cli-framework-output': 2.2.8
@@ -6195,17 +6229,15 @@ snapshots:
     dependencies:
       eslint: 9.39.2(jiti@2.6.1)
 
-  eslint-plugin-unicorn@62.0.0(eslint@9.39.2(jiti@2.6.1)):
+  eslint-plugin-unicorn@63.0.0(eslint@9.39.2(jiti@2.6.1)):
     dependencies:
       '@babel/helper-validator-identifier': 7.28.5
       '@eslint-community/eslint-utils': 4.9.1(eslint@9.39.2(jiti@2.6.1))
-      '@eslint/plugin-kit': 0.4.1
       change-case: 5.4.4
       ci-info: 4.4.0
       clean-regexp: 1.0.0
       core-js-compat: 3.48.0
       eslint: 9.39.2(jiti@2.6.1)
-      esquery: 1.7.0
       find-up-simple: 1.0.1
       globals: 16.5.0
       indent-string: 5.0.0
@@ -8250,6 +8282,21 @@ snapshots:
       '@types/node': 25.2.3
       fsevents: 2.3.3
       jiti: 1.21.7
+      terser: 5.46.0
+      yaml: 2.8.2
+
+  vite@7.3.1(@types/node@25.2.3)(jiti@2.6.1)(terser@5.46.0)(yaml@2.8.2):
+    dependencies:
+      esbuild: 0.27.3
+      fdir: 6.5.0(picomatch@4.0.3)
+      picomatch: 4.0.3
+      postcss: 8.5.6
+      rollup: 4.57.1
+      tinyglobby: 0.2.15
+    optionalDependencies:
+      '@types/node': 25.2.3
+      fsevents: 2.3.3
+      jiti: 2.6.1
       terser: 5.46.0
       yaml: 2.8.2
 

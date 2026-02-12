@@ -1,30 +1,11 @@
 import { fileURLToPath, URL } from 'node:url'
 
-import vue from '@vitejs/plugin-vue'
-import { defineConfig } from 'vite'
+import sharedConfig from 'demo-shared/vite.config.mjs'
+import { mergeConfig } from 'vite'
 
-export default defineConfig(() => ({
-  build: {
-    chunkSizeWarningLimit: 1000,
-    sourcemap: process.env.NODE_ENV !== 'production',
-    minify: process.env.NODE_ENV === 'production',
-    target: 'es2017',
+export default mergeConfig(sharedConfig, {
+  root: fileURLToPath(new URL('../demo-shared', import.meta.url)),
+  define: {
+    BUILD_VARIANT: JSON.stringify('CocoaPods'),
   },
-  plugins: [vue()],
-  resolve: {
-    alias: {
-      '@': fileURLToPath(new URL('src', import.meta.url)),
-    },
-  },
-  server: {
-    watch: {
-      ignored: [
-        '**/node_modules/**',
-        '**/dist/**',
-        '**/.git/**',
-        '**/ios/**',
-        '**/android/**',
-      ],
-    },
-  },
-}))
+})

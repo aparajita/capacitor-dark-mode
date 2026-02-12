@@ -1,7 +1,1 @@
-{
-  "name": "capacitor-dark-mode-demo",
-  "integrations": {
-    "capacitor": {}
-  },
-  "type": "custom"
-}
+../demo-shared/ionic.config.json
