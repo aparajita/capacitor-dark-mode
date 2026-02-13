@@ -1,5 +1,4 @@
 import { Capacitor, WebPlugin } from '@capacitor/core'
-import { StatusBar, Style } from '@capacitor/status-bar'
 
 import type {
   DarkModeGetter,
@@ -11,9 +10,9 @@ import type {
   DarkModeSetter,
   DarkModeSyncStatusBar,
   IsDarkModeResult,
-  StatusBarStyleGetter,
+  SystemBarsStyleGetter,
 } from './definitions.js'
-import { DarkModeAppearance } from './definitions.js'
+import { DarkModeAppearance, SystemBarsStyle } from './definitions.js'
 import { isDarkColor, isValidHexColor, normalizeHexColor } from './utils.js'
 
 const kDefaultBackgroundVariable = '--background'
@@ -25,7 +24,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
   private readonly appearanceListeners = new Set<DarkModeListener>()
   private getter?: DarkModeGetter
   private setter?: DarkModeSetter
-  private statusBarStyleGetter?: StatusBarStyleGetter
+  private systemBarsStyleGetter?: SystemBarsStyleGetter
   private readonly platform = Capacitor.getPlatform()
   private syncStatusBar: DarkModeSyncStatusBar = true
   private statusBarBackgroundVariable = kDefaultBackgroundVariable
@@ -45,6 +44,20 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     throw this.unimplemented('setNativeDarkModeListener is native only')
   }
 
+  // noinspection JSUnusedLocalSymbols
+  async setSystemBarsStyle(_options: {
+    style: SystemBarsStyle
+  }): Promise<void> {
+    throw this.unimplemented('setSystemBarsStyle is native only')
+  }
+
+  // noinspection JSUnusedLocalSymbols
+  async setStatusBarBackgroundColor(_options: {
+    color: string
+  }): Promise<void> {
+    throw this.unimplemented('setStatusBarBackgroundColor is native only')
+  }
+
   /* eslint-enable @typescript-eslint/require-await */
 
   async init({
@@ -53,7 +66,7 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     getter,
     setter,
     syncStatusBar,
-    statusBarStyleGetter,
+    systemBarsStyleGetter,
     disableTransitions,
   }: DarkModeOptions = {}): Promise<void> {
     // Ionic 8+ defines a fixed dark mode class name (`.ion-palette-dark`) for use with
@@ -88,8 +101,8 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
       this.syncStatusBar = syncStatusBar
     }
 
-    if (typeof statusBarStyleGetter === 'function') {
-      this.statusBarStyleGetter = statusBarStyleGetter
+    if (typeof systemBarsStyleGetter === 'function') {
+      this.systemBarsStyleGetter = systemBarsStyleGetter
     }
 
     if (typeof disableTransitions === 'boolean') {
@@ -233,53 +246,57 @@ export abstract class DarkModeBase extends WebPlugin implements DarkModePlugin {
     // On iOS we always need to update the status bar text/icon style
     // to match light/dark mode. On Android we only do so if the user
     // has explicitly requested it.
-    let setStatusBarStyle = this.platform === 'ios'
+    let setStyle = this.platform === 'ios'
 
     // By default the status bar style is the same as the appearance.
-    let statusBarStyle = darkMode ? Style.Dark : Style.Light
+    let systemBarsStyle = darkMode
+      ? SystemBarsStyle.Dark
+      : SystemBarsStyle.Light
 
     // By default we will not change the background color of the status bar.
     let backgroundColor = ''
 
     if (this.syncStatusBar && this.platform === 'android') {
       // Assume the style will change when the appearance changes.
-      setStatusBarStyle = true
+      setStyle = true
 
       // If the sync mode is not 'textOnly', try to get the background color from <ion-content>.
       if (this.syncStatusBar !== 'textOnly') {
         backgroundColor = this.getBackgroundColor()
       }
 
-      if (this.statusBarStyleGetter) {
+      if (this.systemBarsStyleGetter) {
         // If there is a style getter, use it to determine the status bar style.
-        const style = await this.statusBarStyleGetter(
-          statusBarStyle,
+        const style = await this.systemBarsStyleGetter(
+          systemBarsStyle,
           backgroundColor,
         )
 
         if (style) {
-          statusBarStyle = style
+          systemBarsStyle = style
         }
       } else if (backgroundColor) {
         // If the status bar background color should be updated and there is no style getter
         // and we were able to get the <ion-content> background color, set the status bar style
         // based on the color.
-        statusBarStyle = isDarkColor(backgroundColor) ? Style.Dark : Style.Light
+        systemBarsStyle = isDarkColor(backgroundColor)
+          ? SystemBarsStyle.Dark
+          : SystemBarsStyle.Light
       } else if (this.syncStatusBar !== 'textOnly') {
         // If the status bar background color should be updated but we could not get the <ion-content>
         // background color, there is no need to update the status bar style.
-        setStatusBarStyle = false
+        setStyle = false
       }
     }
 
     const actions: Promise<void>[] = []
 
     if (backgroundColor) {
-      actions.push(StatusBar.setBackgroundColor({ color: backgroundColor }))
+      actions.push(this.setStatusBarBackgroundColor({ color: backgroundColor }))
     }
 
-    if (setStatusBarStyle) {
-      actions.push(StatusBar.setStyle({ style: statusBarStyle }))
+    if (setStyle) {
+      actions.push(this.setSystemBarsStyle({ style: systemBarsStyle }))
     }
 
     if (actions.length > 0) {

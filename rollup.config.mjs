@@ -10,7 +10,6 @@ export default defineConfig({
       name: 'capacitorDarkMode',
       globals: {
         '@capacitor/core': 'capacitorExports',
-        '@capacitor/status-bar': 'statusBar',
       },
       sourcemap: Boolean(process.env.SOURCE_MAP),
       inlineDynamicImports: true,
@@ -22,5 +21,5 @@ export default defineConfig({
       inlineDynamicImports: true,
     },
   ],
-  external: ['@capacitor/core', '@capacitor/status-bar'],
+  external: ['@capacitor/core'],
 })

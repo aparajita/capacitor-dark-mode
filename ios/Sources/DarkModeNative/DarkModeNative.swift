@@ -6,7 +6,8 @@ public class DarkModeNative: CAPPlugin, CAPBridgedPlugin {
   public let jsName = "DarkModeNative"
   public let pluginMethods: [CAPPluginMethod] = [
     .init(#selector(isDarkMode)),
-    .init(#selector(setNativeDarkModeListener), returnType: .callback)
+    .init(#selector(setNativeDarkModeListener), returnType: .callback),
+    .init(#selector(setSystemBarsStyle))
   ]
 
   private var traitsView: TraitsView?
@@ -54,5 +55,27 @@ public class DarkModeNative: CAPPlugin, CAPBridgedPlugin {
       call.keepAlive = true
       traitsView?.appearanceListener = appearanceDidChange
     }
+  }
+
+  /**
+   * setSystemBarsStyle() plugin call
+   */
+  @objc public func setSystemBarsStyle(_ call: CAPPluginCall) {
+    let style = call.getString("style") ?? ""
+
+    DispatchQueue.main.async { [weak self] in
+      guard let viewController = self?.bridge?.viewController as? CAPBridgeViewController else {
+        call.resolve([:])
+        return
+      }
+
+      if style == "DARK" {
+        viewController.setStatusBarStyle(.lightContent)
+      } else {
+        viewController.setStatusBarStyle(.darkContent)
+      }
+    }
+
+    call.resolve([:])
   }
 }

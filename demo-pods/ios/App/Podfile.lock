@@ -12,8 +12,6 @@ PODS:
     - Capacitor
   - CapacitorSplashScreen (8.0.0):
     - Capacitor
-  - CapacitorStatusBar (8.0.0):
-    - Capacitor
 
 DEPENDENCIES:
   - AparajitaCapacitorDarkMode (from `../../..`)
@@ -23,7 +21,6 @@ DEPENDENCIES:
   - "CapacitorHaptics (from `../../../node_modules/.pnpm/@capacitor+haptics@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/haptics`)"
   - "CapacitorKeyboard (from `../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/keyboard`)"
   - "CapacitorSplashScreen (from `../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/splash-screen`)"
-  - "CapacitorStatusBar (from `../../../node_modules/.pnpm/@capacitor+status-bar@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/status-bar`)"
 
 EXTERNAL SOURCES:
   AparajitaCapacitorDarkMode:
@@ -40,8 +37,6 @@ EXTERNAL SOURCES:
     :path: "../../../node_modules/.pnpm/@capacitor+keyboard@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/keyboard"
   CapacitorSplashScreen:
     :path: "../../../node_modules/.pnpm/@capacitor+splash-screen@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/splash-screen"
-  CapacitorStatusBar:
-    :path: "../../../node_modules/.pnpm/@capacitor+status-bar@8.0.0_@capacitor+core@8.1.0/node_modules/@capacitor/status-bar"
 
 SPEC CHECKSUMS:
   AparajitaCapacitorDarkMode: e66380c8eeceacdffb8af07ec808c84d3968d04e
@@ -51,8 +46,7 @@ SPEC CHECKSUMS:
   CapacitorHaptics: 2079d9fa04c5a71e18663b4722323c304c58245c
   CapacitorKeyboard: d7868c079a4d5277a3deca27a10a488fcbbb8b69
   CapacitorSplashScreen: 422880d7117605c30699eb4b21644b62db42e86c
-  CapacitorStatusBar: 312e2e67928dfe9514c4a8916a1fd610552f5f35
 
-PODFILE CHECKSUM: 638e0053c54a9097d728df0e9ce06923047bbbbc
+PODFILE CHECKSUM: eb2e75c6324fef482ce348b81f966e3ed0f2253c
 
 COCOAPODS: 1.16.2

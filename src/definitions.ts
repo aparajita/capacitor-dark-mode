@@ -1,5 +1,4 @@
-import type { WebPlugin } from '@capacitor/core'
-import type { Style } from '@capacitor/status-bar'
+import type { WebPlugin, SystemBarsStyle } from '@capacitor/core'
 
 /**
  * The possible appearances an app can have.
@@ -26,11 +25,11 @@ export type DarkModeGetterResult = DarkModeAppearance | null | undefined
  * Your style getter function should return (directly or as a Promise)
  * either:
  *
- * - A Style to signify that is the style you want
+ * - A SystemBarsStyle to signify that is the style you want
  *
  * - null or undefined to signify the default behavior should be used
  */
-export type StatusBarStyleGetterResult = Style | null | undefined
+export type SystemBarsStyleGetterResult = SystemBarsStyle | null | undefined
 
 /**
  * The type of your appearance getter function.
@@ -49,10 +48,10 @@ export type DarkModeSetter = (
 /**
  * The type of your status bar style getter function.
  */
-export type StatusBarStyleGetter = (
-  style?: Style,
+export type SystemBarsStyleGetter = (
+  style?: SystemBarsStyle,
   backgroundColor?: string,
-) => StatusBarStyleGetterResult | Promise<StatusBarStyleGetterResult>
+) => SystemBarsStyleGetterResult | Promise<SystemBarsStyleGetterResult>
 
 /**
  * When you call `addAppearanceListener`, you get back a handle
@@ -129,7 +128,7 @@ export interface DarkModeOptions {
   /**
    * Android only
    *
-   * If `statusBarStyleGetter` is set, this option is unused.
+   * If `systemBarsStyleGetter` is set, this option is unused.
    *
    * If true, on Android the status bar background and content
    * will be synced with the current `DarkModeAppearance`.
@@ -155,12 +154,12 @@ export interface DarkModeOptions {
    * Android only
    *
    * If set, and `syncStatusBar` is true, this function will be called
-   * to retrieve the current status bar style instead of basing it on
+   * to retrieve the current system bars style instead of basing it on
    * the dark mode. If the function wants to signal that no value can
    * be retrieved, it should return a falsey value, in which case
    * the current appearance will be used to determine the style.
    */
-  statusBarStyleGetter?: StatusBarStyleGetter
+  systemBarsStyleGetter?: SystemBarsStyleGetter
 }
 
 /**
@@ -198,6 +197,12 @@ export interface DarkModePlugin extends WebPlugin {
     callback: DarkModeListener,
   ) => Promise<string>
 
+  // private
+  setSystemBarsStyle: (options: { style: SystemBarsStyle }) => Promise<void>
+
+  // private
+  setStatusBarBackgroundColor: (options: { color: string }) => Promise<void>
+
   /**
    * Adds a listener that will be called whenever the system appearance changes,
    * whether or not the system appearance matches your current appearance.
@@ -227,3 +232,5 @@ export interface DarkModePlugin extends WebPlugin {
    */
   update: (data?: DarkModeListenerData) => Promise<DarkModeAppearance>
 }
+
+export { SystemBarsStyle } from '@capacitor/core'

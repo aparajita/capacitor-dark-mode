@@ -68,3 +68,4 @@ captures/
 *.xcworkspace
 
 .eslintcache
+settings.local.json
