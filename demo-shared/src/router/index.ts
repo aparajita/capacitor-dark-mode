@@ -1,11 +1,11 @@
-import Home from '@/views/home-view.vue'
+import DarkModeDemo from '@/components/dark-mode-demo.vue'
 import { createRouter, createWebHistory } from '@ionic/vue-router'
 import type { RouteRecordRaw } from 'vue-router'
 
 const routes: RouteRecordRaw[] = [
   {
     path: '/',
-    component: Home,
+    component: DarkModeDemo,
   },
 ]
 
