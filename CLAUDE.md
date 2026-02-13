@@ -23,7 +23,7 @@ Capacitor 8 plugin for universal dark mode support (Ionic web, iOS, Android). Ma
 
 ## Tooling Preferences
 
-- Use Serena's semantic tools for code exploration and symbol lookups:
+- Use Serena's semantic tools for code exploration and symbol lookups of Typescript and Vue code:
   - `jet_brains_find_symbol` - Find symbol definitions
   - `jet_brains_find_referencing_symbols` - Find references
   - `jet_brains_get_symbols_overview` - Get symbol overviews
