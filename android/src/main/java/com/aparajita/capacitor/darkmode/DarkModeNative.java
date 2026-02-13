@@ -49,7 +49,7 @@ public class DarkModeNative extends Plugin {
   }
 
   @PluginMethod
-  public void setStatusBarBackgroundColor(PluginCall call) {
+  public void setBackgroundColor(PluginCall call) {
     String color = call.getString("color", "");
 
     if (color.isEmpty()) {
@@ -69,7 +69,7 @@ public class DarkModeNative extends Plugin {
   }
 
   @PluginMethod
-  public void setSystemBarsStyle(PluginCall call) {
+  public void setStyle(PluginCall call) {
     String style = call.getString("style", "");
 
     getActivity().runOnUiThread(() -> {

@@ -1,17 +1,17 @@
 // noinspection JSUnusedGlobalSymbols
 
-import { DarkModeAppearance, SystemBarsStyle } from './definitions.js'
+import { DarkModeAppearance, Style } from './definitions.js'
 
 const kAppearanceToStyleMap = {
-  [DarkModeAppearance.dark]: SystemBarsStyle.Dark,
-  [DarkModeAppearance.light]: SystemBarsStyle.Light,
-  [DarkModeAppearance.system]: SystemBarsStyle.Default,
+  [DarkModeAppearance.dark]: Style.Dark,
+  [DarkModeAppearance.light]: Style.Light,
+  [DarkModeAppearance.system]: Style.Default,
 } as const
 
 const kStyleToAppearanceMap = {
-  [SystemBarsStyle.Dark]: DarkModeAppearance.dark,
-  [SystemBarsStyle.Light]: DarkModeAppearance.light,
-  [SystemBarsStyle.Default]: DarkModeAppearance.system,
+  [Style.Dark]: DarkModeAppearance.dark,
+  [Style.Light]: DarkModeAppearance.light,
+  [Style.Default]: DarkModeAppearance.system,
 }
 
 /**
@@ -63,14 +63,12 @@ export function isDarkColor(color: string, threshold = 0.5): boolean {
   return brightness < threshold * 255
 }
 
-// Converts a DarkModeAppearance to a SystemBarsStyle
-export function appearanceToStyle(
-  appearance: DarkModeAppearance,
-): SystemBarsStyle {
+// Converts a DarkModeAppearance to a Style
+export function appearanceToStyle(appearance: DarkModeAppearance): Style {
   return kAppearanceToStyleMap[appearance]
 }
 
-// Converts a SystemBarsStyle to a DarkModeAppearance
-export function styleToAppearance(style: SystemBarsStyle): DarkModeAppearance {
+// Converts a Style to a DarkModeAppearance
+export function styleToAppearance(style: Style): DarkModeAppearance {
   return kStyleToAppearanceMap[style]
 }

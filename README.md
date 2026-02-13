@@ -6,14 +6,7 @@ This [Capacitor 8](https://capacitorjs.com) plugin is a complete dark mode solut
 
 This version requires Capacitor 8.
 
-The `@capacitor/status-bar` peer dependency has been removed. The plugin now uses its own native methods and Capacitor 8’s built-in `SystemBarsStyle` enum from `@capacitor/core`:
-
-- **Import change**: Replace `import { Style } from '@capacitor/status-bar'` with `import { SystemBarsStyle } from '@capacitor/core'`
-- **Type change**: `statusBarStyleGetter` → `systemBarsStyleGetter` (property name in `DarkModeOptions`)
-- **Type references**: `StatusBarStyleGetter` → `SystemBarsStyleGetter`, `StatusBarStyleGetterResult` → `SystemBarsStyleGetterResult`
-- **Enum values**: `Style.Dark` → `SystemBarsStyle.Dark`, `Style.Light` → `SystemBarsStyle.Light`, `Style.Default` → `SystemBarsStyle.Default`
-
-If you were using `statusBarStyleGetter`, update your code accordingly. See the [systemBarsStyleGetter](#systembarsStylegetter) documentation below.
+The `@capacitor/status-bar` peer dependency has been removed. If you were importing `Style` from `@capacitor/status-bar`, import it from `@aparajita/capacitor-dark-mode` instead. All type names (`Style`, `StatusBarStyleGetter`, `StatusBarStyleGetterResult`) and the `statusBarStyleGetter` option remain the same.
 
 In order to conform to Ionic 8’s built in dark mode support when importing `@ionic/vue/css/palettes/dark.class.css`, two changes have been made:
 
@@ -185,27 +178,25 @@ If you want to use a different color for the status bar, you can set `statusBarB
 
 If the value of the variable is not a valid 3 or 6-digit '#'-prefixed hex color, no change is made.
 
-**systemBarsStyleGetter**<br>
+**statusBarStyleGetter**<br>
 When `syncStatusBar` is `true` and a valid background color is set, by default the status bar style will be set according to the luminance of the background color:
 
 ```typescript
 // Default threshold is 0.5
-const systemBarsStyle = isDarkColor(color)
-  ? SystemBarsStyle.Dark
-  : SystemBarsStyle.Light
+const statusBarStyle = isDarkColor(color) ? Style.Dark : Style.Light
 ```
 
-If you want to use a different style, you can set `systemBarsStyleGetter` to a function that returns the style to use. The function will be called with the current `SystemBarsStyle` (based on the appearance setting, not the background color) and the status bar background color, and should return the `SystemBarsStyle` that the status bar should be set to.
+If you want to use a different style, you can set `statusBarStyleGetter` to a function that returns the style to use. The function will be called with the current `Style` (based on the appearance setting, not the background color) and the status bar background color, and should return the `Style` that the status bar should be set to.
 
 For example, you could use `isDarkColor()` (which is exported by the plugin) with a different threshold:
 
 ```typescript
-import { SystemBarsStyle } from '@capacitor/core'
+import { Style } from '@aparajita/capacitor-dark-mode'
 
-const systemBarsStyleGetter = (style?: SystemBarsStyle, color?: string) => {
+const statusBarStyleGetter = (style?: Style, color?: string) => {
   if (color) {
     const isDark = isDarkColor(color, 0.4)
-    return isDark ? SystemBarsStyle.Dark : SystemBarsStyle.Light
+    return isDark ? Style.Dark : Style.Light
   }
 
   return style
@@ -390,17 +381,17 @@ Possible values for the syncStatusBar option.
 
 <code>boolean | 'textOnly'</code>
 
-#### SystemBarsStyleGetter
+#### StatusBarStyleGetter
 
-The type of your system bars style getter function.
+The type of your status bar style getter function.
 
-<code>(style?: <a href="https://capacitorjs.com/docs/apis/system-bars#systembarsStyle">SystemBarsStyle</a>, backgroundColor?: string): <a href="#systembarsstylegetterresult">SystemBarsStyleGetterResult</a> | Promise&lt;<a href="#systembarsstylegetterresult">SystemBarsStyleGetterResult</a>&gt;</code>
+<code>(style?: <a href="#style">Style</a>, backgroundColor?: string): <a href="#statusbarstylegetterresult">StatusBarStyleGetterResult</a> | Promise&lt;<a href="#statusbarstylegetterresult">StatusBarStyleGetterResult</a>&gt;</code>
 
-#### SystemBarsStyleGetterResult
+#### StatusBarStyleGetterResult
 
-Your style getter function should return (directly or as a Promise) either:<br><br>- A <a href="https://capacitorjs.com/docs/apis/system-bars#systembarsstyle">SystemBarsStyle</a> to signify that is the style you want<br><br>- null or undefined to signify the default behavior should be used
+Your style getter function should return (directly or as a Promise) either:<br><br>- A <a href="#style">Style</a> to signify that is the style you want<br><br>- null or undefined to signify the default behavior should be used
 
-<code><a href="https://capacitorjs.com/docs/apis/system-bars#systembarsstyle">SystemBarsStyle</a> | null</code> |
+<code><a href="#style">Style</a> | null</code> |
 
 #### Record
 

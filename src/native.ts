@@ -11,8 +11,8 @@ export class DarkModeNative extends DarkModeBase {
     super()
     this.setNativeDarkModeListener = capProxy.setNativeDarkModeListener
     this.isDarkMode = capProxy.isDarkMode
-    this.setSystemBarsStyle = capProxy.setSystemBarsStyle
-    this.setStatusBarBackgroundColor = capProxy.setStatusBarBackgroundColor
+    this.setStyle = capProxy.setStyle
+    this.setBackgroundColor = capProxy.setBackgroundColor
   }
 
   protected async registerDarkModeListener(): Promise<void> {

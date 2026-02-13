@@ -7,7 +7,7 @@ public class DarkModeNative: CAPPlugin, CAPBridgedPlugin {
   public let pluginMethods: [CAPPluginMethod] = [
     .init(#selector(isDarkMode)),
     .init(#selector(setNativeDarkModeListener), returnType: .callback),
-    .init(#selector(setSystemBarsStyle))
+    .init(#selector(setStyle))
   ]
 
   private var traitsView: TraitsView?
@@ -58,9 +58,9 @@ public class DarkModeNative: CAPPlugin, CAPBridgedPlugin {
   }
 
   /**
-   * setSystemBarsStyle() plugin call
+   * setStyle() plugin call
    */
-  @objc public func setSystemBarsStyle(_ call: CAPPluginCall) {
+  @objc public func setStyle(_ call: CAPPluginCall) {
     let style = call.getString("style") ?? ""
 
     DispatchQueue.main.async { [weak self] in
