@@ -2,12 +2,12 @@
   "version": "1.0.0",
   "masterPlans": [
     {
-      "path": "plans/demo-restructure/demo-restructure.md",
-      "description": "Add demo-spm and demo-shared directories",
-      "subdirectory": "demo-restructure",
+      "path": "plans/edge-to-edge-demo-tab/edge-to-edge-demo-tab.md",
+      "description": "Add edge-to-edge demo tab to test textOnly status bar sync mode",
+      "subdirectory": "edge-to-edge-demo-tab",
       "subPlans": [],
       "branches": []
     }
   ],
-  "activeMaster": "plans/demo-restructure/demo-restructure.md"
+  "activeMaster": "plans/edge-to-edge-demo-tab/edge-to-edge-demo-tab.md"
 }
